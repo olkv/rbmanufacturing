@@ -6,7 +6,11 @@ import com.example.rbmanufacturing.domain.repository.OperationRepository
 class OperationRepositoryImpl: OperationRepository {
 
     override fun getFunOperation():ArrayList<CFunOperation> {
-        return TODO()
+        val listFunOperation = mutableListOf<CFunOperation>()
+
+        listFunOperation.add(CFunOperation(name = "Передача материалов в производство", code = "00001"))
+
+        return listFunOperation as ArrayList<CFunOperation>
     }
 
 }
