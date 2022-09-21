@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             val listFunOperation = vmMain.GetListOperation()
 
             if(listFunOperation.size>0) {
-                txtOperation.text = listFunOperation[0].name
+                txtOperation.text = listFunOperation[1].name
             }
 
 
