@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.ViewModelLazy
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.data.repository.OperationRepositoryImpl
 import com.example.rbmanufacturing.domain.usecase.GetListFunOperationUseCase
+import kotlinx.coroutines.GlobalScope
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         init()
+
     }
 
     private fun init() {
