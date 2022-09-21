@@ -18,19 +18,19 @@ class MainViewModel: ViewModel() {
     private val operationRepositoryImpl = OperationRepositoryImpl()
     private val getListFunOperationUseCase = GetListFunOperationUseCase(operationRepository = operationRepositoryImpl)
 
+    /*
     init {
 
-        /*
+
         viewModelScope.launch {
             CountState.collect {
 
             }
         }
-        */
 
-        TODO()
+
     }
-
+    */
 
     fun GetListOperation():ArrayList<CFunOperation> {
         val res = getListFunOperationUseCase.execute()
