@@ -49,8 +49,10 @@ dependencies {
     implementation 'javax.inject:javax.inject:1'
 
     //Библиотека ViewModel
-    def lifecycle_version = "2.5.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    def lifecycleVersion = "2.5.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
 }
