@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.MainActivity" >
+    tools:context=".presentation.MainActivity">
 
     <TextView
         android:id="@+id/txtOperation"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Название операции"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:hint="Название операции" />
 
     <Button
         android:id="@+id/btnGetOperation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Получить операцию"
-        app:layout_constraintStart_toStartOf="@+id/txtOperation"
-        app:layout_constraintTop_toBottomOf="@+id/txtOperation" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Получить операцию" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigationBar"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvFunOperation"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp" />
+
+</LinearLayout>

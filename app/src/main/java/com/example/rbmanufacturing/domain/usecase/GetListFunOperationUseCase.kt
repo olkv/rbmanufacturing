@@ -5,7 +5,8 @@ import com.example.rbmanufacturing.domain.repository.OperationRepository
 
 class GetListFunOperationUseCase(private val operationRepository: OperationRepository) {
 
-    fun execute(): ArrayList<CFunOperation> {
+    fun execute(): MutableList<CFunOperation> {
         return operationRepository.getFunOperation()
     }
+
 }

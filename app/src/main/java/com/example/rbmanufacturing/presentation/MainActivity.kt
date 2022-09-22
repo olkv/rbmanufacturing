@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
-import com.example.rbmanufacturing.data.repository.OperationRepositoryImpl
-import com.example.rbmanufacturing.domain.usecase.GetListFunOperationUseCase
-import kotlinx.coroutines.GlobalScope
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,15 +26,19 @@ class MainActivity : AppCompatActivity() {
         vmMain = ViewModelProvider(this)[MainViewModel::class.java]
 
         val txtOperation = findViewById<TextView>(R.id.txtOperation)
-
         val btnGetOperation = findViewById<Button>(R.id.btnGetOperation)
+        val rcvFunOperation = findViewById<RecyclerView>(R.id.rcvFunOperation)
+
+        rcvFunOperation.hasFixedSize()
+        rcvFunOperation.layoutManager = LinearLayoutManager(this)
+
+        val listFunOperation = vmMain.GetListOperation()
+        rcvFunOperation.adapter = FunOperationAdapter(listFunOperation, this)
+
 
         btnGetOperation.setOnClickListener {
-
-            val listFunOperation = vmMain.GetListOperation()
-
             if(listFunOperation.size>0) {
-                txtOperation.text = listFunOperation[1].name
+                txtOperation.text = listFunOperation[listFunOperation.size-1].name
             }
 
 
@@ -44,3 +47,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+

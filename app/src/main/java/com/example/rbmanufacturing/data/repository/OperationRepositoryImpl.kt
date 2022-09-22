@@ -10,8 +10,10 @@ class OperationRepositoryImpl: OperationRepository {
 
         listFunOperation.add(CFunOperation(name = "Передача материалов в производство", code = "00001"))
         listFunOperation.add(CFunOperation(name = "Передача продукции из производства", code = "00002"))
+        listFunOperation.add(CFunOperation(name = "Передача продукции в кладовую", code = "00003"))
 
         return listFunOperation as ArrayList<CFunOperation>
     }
 
 }
+
