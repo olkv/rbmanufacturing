@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="16px"
+    android:paddingBottom="16px">
 
     <LinearLayout
         android:layout_width="300dp"
@@ -19,7 +21,8 @@
             android:id="@+id/txtDescriptionOperation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Описание операции" />
+            android:text="Описание операции"
+            android:textSize="10sp" />
     </LinearLayout>
 
     <LinearLayout

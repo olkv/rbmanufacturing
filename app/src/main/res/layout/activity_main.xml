@@ -13,15 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Название операции" />
-
-    <Button
-        android:id="@+id/btnGetOperation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Получить операцию" />
+        android:layout_marginTop="8dp"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:hint="Выберите операцию" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvFunOperation"

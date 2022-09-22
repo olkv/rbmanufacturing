@@ -1,6 +1,7 @@
 package com.example.rbmanufacturing.presentation
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +19,17 @@ class FunOperationAdapter(operationArray:MutableList<CFunOperation>, context: Co
 
         val txtNameOperation = view.findViewById<TextView>(R.id.txtNameOperation)
         val txtCodeOperation = view.findViewById<TextView>(R.id.txtCodeOperation)
+        val txtDescriptionOperation = view.findViewById<TextView>(R.id.txtDescriptionOperation)
 
         fun bind(operationItem:CFunOperation, context: Context) {
             txtNameOperation.text = operationItem.name
             txtCodeOperation.text = operationItem.code
+            txtDescriptionOperation.text = operationItem.description
+
+            itemView.setOnClickListener {
+                Log.d("RBM",operationItem.code)
+            }
+
         }
 
     }
