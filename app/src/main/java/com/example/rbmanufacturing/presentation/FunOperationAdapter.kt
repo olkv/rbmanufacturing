@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.models.CFunOperation
 
-class FunOperationAdapter(operationArray:MutableList<CFunOperation>, context: Context): RecyclerView.Adapter<FunOperationAdapter.ViewHolder>() {
+class FunOperationAdapter(context: Context): RecyclerView.Adapter<FunOperationAdapter.ViewHolder>() {
 
-    var t_context = context
-    var t_operationArray = operationArray
+    val inflater: LayoutInflater = LayoutInflater.from(context)
+    var t_operationArray = mutableListOf<CFunOperation>()//operationArray
 
     class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
@@ -21,27 +21,32 @@ class FunOperationAdapter(operationArray:MutableList<CFunOperation>, context: Co
         val txtCodeOperation = view.findViewById<TextView>(R.id.txtCodeOperation)
         val txtDescriptionOperation = view.findViewById<TextView>(R.id.txtDescriptionOperation)
 
-        fun bind(operationItem:CFunOperation, context: Context) {
+        fun bind(operationItem:CFunOperation) {
             txtNameOperation.text = operationItem.name
             txtCodeOperation.text = operationItem.code
             txtDescriptionOperation.text = operationItem.description
 
             itemView.setOnClickListener {
-                Log.d("RBM",operationItem.code)
+                Log.d("MYLOG",operationItem.code)
             }
 
         }
-
     }
 
+    internal fun setOperationArray(operationArray: MutableList<CFunOperation>) {
+        this.t_operationArray = operationArray
+        this.notifyDataSetChanged()
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(t_context)
         return ViewHolder(inflater.inflate(R.layout.item_fun_operation,parent,false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var itemOperation = t_operationArray[position]
-        holder.bind(itemOperation, t_context)    }
+        holder.bind(itemOperation)
+    }
 
     override fun getItemCount(): Int {
         return t_operationArray.size

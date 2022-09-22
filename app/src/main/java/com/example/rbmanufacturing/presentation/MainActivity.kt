@@ -28,38 +28,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
 
-        val m_Context = this
-
         vmMain = ViewModelProvider(this)[MainViewModel::class.java]
 
         val txtOperation = findViewById<TextView>(R.id.txtOperation)
-        //val btnGetOperation = findViewById<Button>(R.id.btnGetOperation)
+
         val rcvFunOperation = findViewById<RecyclerView>(R.id.rcvFunOperation)
+        val adapter = FunOperationAdapter(this)
+
 
         rcvFunOperation.hasFixedSize()
-        rcvFunOperation.layoutManager = LinearLayoutManager(m_Context)
+        rcvFunOperation.layoutManager = LinearLayoutManager(this)
+        rcvFunOperation.adapter = adapter
 
         lifecycleScope.launch {
             vmMain.listFunOperation.collect {
 
                 val listFunOperation = vmMain.GetListOperation()
-                rcvFunOperation.adapter = FunOperationAdapter(listFunOperation, m_Context)
+                adapter.setOperationArray(listFunOperation)
 
             }
         }
 
-        /*
-        btnGetOperation.setOnClickListener {
-
-            /*
-            if(listFunOperation.size>0) {
-                txtOperation.text = listFunOperation[listFunOperation.size-1].name
-            }
-            */
-
-        }
-
-         */
 
     }
 
