@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import kotlinx.coroutines.launch
 
-class OperationFragment : Fragment() {
+class OperationFragment : Fragment(), ItemClickListener {
 
     private lateinit var vmMain: MainViewModel
 
@@ -25,13 +25,14 @@ class OperationFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_operation, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         vmMain = ViewModelProvider(this)[MainViewModel::class.java]
 
         val rcvFunOperation = view?.findViewById<RecyclerView>(R.id.rcvFunOperation)
-        val adapter = FunOperationAdapter(view.context)
+        val adapter = FunOperationAdapter(view.context, this)
 
         rcvFunOperation?.hasFixedSize()
         rcvFunOperation?.layoutManager = LinearLayoutManager(view.context)
@@ -52,5 +53,9 @@ class OperationFragment : Fragment() {
         @JvmStatic
         fun newInstance() = OperationFragment()
         }
+
+    override fun OnClick(code: String) {
+        Log.d("MYLOG","Click on fragment $code")
+    }
 
 }

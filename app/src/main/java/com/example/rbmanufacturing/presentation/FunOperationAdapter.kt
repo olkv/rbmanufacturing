@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.models.CFunOperation
 
-class FunOperationAdapter(context: Context): RecyclerView.Adapter<FunOperationAdapter.ViewHolder>() {
+class FunOperationAdapter(context: Context, val itemClickListener: ItemClickListener): RecyclerView.Adapter<FunOperationAdapter.ViewHolder>() {
 
     val inflater: LayoutInflater = LayoutInflater.from(context)
     var t_operationArray = mutableListOf<CFunOperation>()//operationArray
 
-    class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
         val txtNameOperation = view.findViewById<TextView>(R.id.txtNameOperation)
         val txtCodeOperation = view.findViewById<TextView>(R.id.txtCodeOperation)
@@ -27,7 +27,8 @@ class FunOperationAdapter(context: Context): RecyclerView.Adapter<FunOperationAd
             txtDescriptionOperation.text = operationItem.description
 
             itemView.setOnClickListener {
-                Log.d("MYLOG",operationItem.code)
+                //Log.d("MYLOG",operationItem.code)
+                itemClickListener.OnClick(operationItem.code)
             }
 
         }
