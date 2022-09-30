@@ -1,12 +1,15 @@
 package com.example.rbmanufacturing.presentation.moveitemmanf
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Switch
 import android.widget.TextView
+import androidx.core.text.isDigitsOnly
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.models.CItemWarehouse
@@ -37,11 +40,16 @@ class MoveItemManfAdapter(context: Context): RecyclerView.Adapter<MoveItemManfAd
             txtCountItem.text = item.count.toString()
             editCountItem.setText(item.editcount.toString())
 
+            if (item.count==item.editcount && item.editcount>0) {
+                switchFullCount.isChecked = true
+            }
+1
             itemView.setOnClickListener {
                 //Log.d("MYLOG",operationItem.code)
                 //itemClickListener.OnClick(operationItem.code)
             }
 
+            //Переключатель если включен, тогда все количество, если нет тогда 0
             switchFullCount.setOnClickListener {
                 if (switchFullCount.isChecked) {
                     editCountItem.setText(item.count.toString())
@@ -49,7 +57,32 @@ class MoveItemManfAdapter(context: Context): RecyclerView.Adapter<MoveItemManfAd
                 else {
                     editCountItem.setText("0.0")
                 }
+
+                t_items[adapterPosition].editcount = editCountItem.text.toString().toDouble()
+
             }
+
+            //Добавление слушателя изменения поля
+            editCountItem.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                    if(s!!.isNotEmpty()) {
+                        if (s.isDigitsOnly()) {
+                            t_items[adapterPosition].editcount = s.toString().toDouble()
+                            switchFullCount.isChecked = t_items[adapterPosition].editcount==t_items[adapterPosition].count && t_items[adapterPosition].editcount>0
+                        }
+                    }
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+
+            })
 
         }
     }

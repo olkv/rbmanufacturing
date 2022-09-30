@@ -8,5 +8,5 @@ class CItemWarehouse(
     val custom: String,
     val appointment: String,
     val count: Double,
-    val editcount: Double
+    var editcount: Double
 )
