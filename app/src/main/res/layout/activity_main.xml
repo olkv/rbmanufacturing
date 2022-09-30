@@ -7,23 +7,22 @@
     android:orientation="vertical"
     tools:context=".presentation.MainActivity">
 
-    <TextView
-        android:id="@+id/txtOperation"
+    <fragment
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
+        android:layout_margin="8dp"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/main_navigation" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:hint="Выберите операцию" />
-
-    <FrameLayout
-        android:id="@+id/viewMain"
-        android:name="com.example.rbmanufacturing.presentation.OperationFragment"
-        android:layout_width="match_parent"
-        android:layout_margin="16dp"
-        android:layout_height="match_parent" />
+        app:menu="@menu/main_menu" />
 
 
 </LinearLayout>

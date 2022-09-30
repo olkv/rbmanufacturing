@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
@@ -56,6 +57,9 @@ class OperationFragment : Fragment(), ItemClickListener {
 
     override fun OnClick(code: String) {
         Log.d("MYLOG","Click on fragment $code")
+
+        if(code=="00001")
+            findNavController().navigate(R.id.action_operationFragment_to_operationMaster)
     }
 
 }

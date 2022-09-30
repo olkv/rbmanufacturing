@@ -60,4 +60,12 @@ dependencies {
     def courotines_version = "1.6.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$courotines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$courotines_version"
+
+
+    def navigation_version = "2.5.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+
 }

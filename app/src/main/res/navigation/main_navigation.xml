@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/operationFragment">
+
+    <fragment
+        android:id="@+id/operationFragment"
+        android:name="com.example.rbmanufacturing.presentation.OperationFragment"
+        android:label="Операции"
+        tools:layout="@layout/fragment_operation" >
+        <action
+            android:id="@+id/action_operationFragment_to_operationMaster"
+            app:destination="@id/operationMaster" />
+    </fragment>
+    <fragment
+        android:id="@+id/operationMaster"
+        android:name="com.example.rbmanufacturing.presentation.opmaster.OperationMaster"
+        android:label="Отчет мастера смены"
+        tools:layout="@layout/fragment_operation_master" />
+    <fragment
+        android:id="@+id/configFragment"
+        android:name="com.example.rbmanufacturing.presentation.config.ConfigFragment"
+        android:label="Настройки"
+        tools:layout="@layout/fragment_config" />
+</navigation>
