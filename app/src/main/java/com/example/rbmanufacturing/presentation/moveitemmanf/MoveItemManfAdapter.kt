@@ -20,6 +20,9 @@ class MoveItemManfAdapter(context: Context): RecyclerView.Adapter<MoveItemManfAd
 
         val txtNameItem = view.findViewById<TextView>(R.id.txtNameItem)
         val txtParamenerItem = view.findViewById<TextView>(R.id.txtParamenerItem)
+        val txtStageItem = view.findViewById<TextView>(R.id.txtStageItem)
+        val txtCustomItem = view.findViewById<TextView>(R.id.txtCustomItem)
+        val txtAppointmentItem = view.findViewById<TextView>(R.id.txtAppointmentItem)
         val txtCountItem = view.findViewById<TextView>(R.id.txtCountItem)
         val editCountItem = view.findViewById<EditText>(R.id.editCountItem)
         val switchFullCount = view.findViewById<Switch>(R.id.switchFullCount)
@@ -28,6 +31,9 @@ class MoveItemManfAdapter(context: Context): RecyclerView.Adapter<MoveItemManfAd
         fun bind(item: CItemWarehouse) {
             txtNameItem.text = item.name
             txtParamenerItem.text = item.parameter
+            txtStageItem.text = item.stage
+            txtCustomItem.text = item.custom
+            txtAppointmentItem.text = item.appointment
             txtCountItem.text = item.count.toString()
             editCountItem.setText(item.editcount.toString())
 
