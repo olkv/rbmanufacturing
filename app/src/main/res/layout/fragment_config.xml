@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,9 +13,64 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Адрес для подключения :" />
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Настройки" />
+            android:layout_height="wrap_content"
+            app:helperText="Адрес может водится с указанием IP адреса так и с использованием доменного имени. Например, http://192.168.1.1/ или http://example.ru/">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editURLConnect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Введите строку подключения к серверу" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/txtUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:textStyle="bold"
+            android:text="Имя пользоватея :" />
+
+        <EditText
+            android:id="@+id/editUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Введите имя пользователя"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/txtPasswoord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:text="Пароль :" />
+
+        <EditText
+            android:id="@+id/editUserPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Введите пароль"
+            android:inputType="numberPassword" />
+
+        <ToggleButton
+            android:id="@+id/btnConnectServer"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Подключение к серверу"
+            android:textOff="Подключиться к серверу"
+            android:textOn="Отключится от сервера" />
+
     </LinearLayout>
 
 </FrameLayout>

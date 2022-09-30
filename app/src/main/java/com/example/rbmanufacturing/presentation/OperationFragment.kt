@@ -60,6 +60,10 @@ class OperationFragment : Fragment(), ItemClickListener {
 
         if(code=="00001")
             findNavController().navigate(R.id.action_operationFragment_to_operationMaster)
+
+        if(code=="00002")
+            findNavController().navigate(R.id.action_operationFragment_to_moveItemManfFragment)
+
     }
 
 }

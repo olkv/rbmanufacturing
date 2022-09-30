@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_operationFragment_to_operationMaster"
             app:destination="@id/operationMaster" />
+        <action
+            android:id="@+id/action_operationFragment_to_moveItemManfFragment"
+            app:destination="@id/moveItemManfFragment" />
     </fragment>
     <fragment
         android:id="@+id/operationMaster"
@@ -24,4 +27,9 @@
         android:name="com.example.rbmanufacturing.presentation.config.ConfigFragment"
         android:label="Настройки"
         tools:layout="@layout/fragment_config" />
+    <fragment
+        android:id="@+id/moveItemManfFragment"
+        android:name="com.example.rbmanufacturing.presentation.moveitemmanf.MoveItemManfFragment"
+        android:label="Передача продукции из производства"
+        tools:layout="@layout/fragment_move_item_manf" />
 </navigation>
