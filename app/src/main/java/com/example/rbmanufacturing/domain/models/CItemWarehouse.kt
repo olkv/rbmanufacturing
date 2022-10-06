@@ -1,12 +1,13 @@
 package com.example.rbmanufacturing.domain.models
 
-class CItemWarehouse(
-    val uid:String,
-    val name: String,
-    val parameter: String,
-    val stage: String,
-    val custom: String,
-    val appointment: String,
-    val count: Double,
-    var editcount: Double
+//Класс (строка) описывающаю таблицу движения продукции на складе
+data class CItemWarehouse(
+    var uid:String = "",            //уникальный код номенклатуры
+    var name: String = "",          //наименование
+    var parameter: String = "",     //характеристика
+    var stage: String = "",         //этап производства
+    var custom: String = "",        //заказ производства
+    var appointment: String= "",    //назначение
+    var count: Double = 0.0,        //необходимое количество
+    var editcount: Double = 0.0     //выбранное количество
 )

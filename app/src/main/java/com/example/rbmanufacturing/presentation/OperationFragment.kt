@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
+import com.example.rbmanufacturing.network.getListWarehouse
 import kotlinx.coroutines.launch
 
 class OperationFragment : Fragment(), ItemClickListener {
@@ -63,6 +64,12 @@ class OperationFragment : Fragment(), ItemClickListener {
 
         if(code=="00002")
             findNavController().navigate(R.id.action_operationFragment_to_moveItemManfFragment)
+
+
+        if(code=="00003")
+            getListWarehouse("oleg")
+
+
 
     }
 

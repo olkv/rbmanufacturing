@@ -5,6 +5,8 @@ import com.example.rbmanufacturing.domain.repository.ItemWarehouseRepository
 
 class ItemWarehouseRepositoryImpl:ItemWarehouseRepository {
     override fun getItemsWarehouse(): MutableList<CItemWarehouse> {
+
+
         var items = mutableListOf<CItemWarehouse>()
 
         items.add(
@@ -45,5 +47,6 @@ class ItemWarehouseRepositoryImpl:ItemWarehouseRepository {
 
 
         return  items
+
     }
 }

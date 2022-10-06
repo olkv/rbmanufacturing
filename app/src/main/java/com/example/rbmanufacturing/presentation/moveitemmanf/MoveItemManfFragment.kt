@@ -2,6 +2,7 @@ package com.example.rbmanufacturing.presentation.moveitemmanf
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +13,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
+import com.example.rbmanufacturing.domain.models.CItemWarehouse
+import com.example.rbmanufacturing.domain.repository.RowClickListiner
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
-class MoveItemManfFragment : Fragment() {
+class MoveItemManfFragment : Fragment(), RowClickListiner {
 
     private lateinit var vmMoveItemMan: MoveItemManfViewModel
 
@@ -37,7 +40,7 @@ class MoveItemManfFragment : Fragment() {
         vmMoveItemMan = ViewModelProvider(this)[MoveItemManfViewModel::class.java]
 
         val rcvItemMoveManf = view.findViewById<RecyclerView>(R.id.rcvItemMoveManf)
-        val adapter = MoveItemManfAdapter(view.context)
+        val adapter = MoveItemManfAdapter(view.context, this)
 
         rcvItemMoveManf?.hasFixedSize()
         rcvItemMoveManf?.layoutManager = LinearLayoutManager(view.context)
@@ -63,13 +66,15 @@ class MoveItemManfFragment : Fragment() {
 
             val t_itemListManf = adapter.t_items.filter {item->
                 item.editcount>0
-            }
+            } as MutableList<CItemWarehouse>
 
             if (t_itemListManf.isNotEmpty()) {
                 val dlgYesNo = AlertDialog.Builder(it.context)
                 dlgYesNo.setTitle("Перенос данных")
                 dlgYesNo.setMessage("Перенести данные в 1С:ERP ?")
                 dlgYesNo.setPositiveButton("Да") {dialog, id ->
+
+                    vmMoveItemMan.pushSelectItemWarehouseManf(t_itemListManf)
 
                     dialog.cancel()
                 }
@@ -92,5 +97,9 @@ class MoveItemManfFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = MoveItemManfFragment()
+    }
+
+    override fun OnClick(rowid: Int) {
+        Log.d("MYLOG","Click ROW id $rowid")
     }
 }

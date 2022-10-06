@@ -1,10 +1,29 @@
 package com.example.rbmanufacturing.network
 
-import okhttp3.Response
+import com.example.rbmanufacturing.domain.models.CItemWarehouse
+import com.example.rbmanufacturing.domain.models.CResult
+import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
 
-interface ApiService {
-    @GET("api/recipes")
-    fun getService(): Response
+/*
+Описание интерфейсов  HTTP сервиса
+ */
+
+interface RetrofitServices {
+    @GET("version")
+    fun getVersionProtocol(): Call<String>
+
+    //список номенклатуры по которому нужно создать документ поступление из производства
+    @GET("getlistmanf/{username}")
+    fun getListWarehouseManf(@Path("username") username: String): Call<MutableList<CItemWarehouse>>
+
+    @FormUrlEncoded
+    @POST("pushitemmanf/{username}")
+    fun pushItemWarehouseManf(@Field("strJson") strJson: String, @Path("username") username: String): Call<CResult>
 
 }
+

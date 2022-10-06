@@ -1,20 +1,24 @@
 package com.example.rbmanufacturing.presentation.moveitemmanf
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Color.WHITE
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Switch
 import android.widget.TextView
 import androidx.core.text.isDigitsOnly
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.models.CItemWarehouse
+import com.example.rbmanufacturing.domain.repository.RowClickListiner
 
-class MoveItemManfAdapter(context: Context): RecyclerView.Adapter<MoveItemManfAdapter.ViewHolder>() {
+class MoveItemManfAdapter(context: Context, val rowClickListiner: RowClickListiner): RecyclerView.Adapter<MoveItemManfAdapter.ViewHolder>() {
 
     val inflater: LayoutInflater = LayoutInflater.from(context)
     var t_items = mutableListOf<CItemWarehouse>()//operationArray
@@ -29,6 +33,7 @@ class MoveItemManfAdapter(context: Context): RecyclerView.Adapter<MoveItemManfAd
         val txtCountItem = view.findViewById<TextView>(R.id.txtCountItem)
         val editCountItem = view.findViewById<EditText>(R.id.editCountItem)
         val switchFullCount = view.findViewById<Switch>(R.id.switchFullCount)
+        val rowItem = view.findViewById<LinearLayout>(R.id.rowItem)
 
 
         fun bind(item: CItemWarehouse) {
@@ -39,6 +44,13 @@ class MoveItemManfAdapter(context: Context): RecyclerView.Adapter<MoveItemManfAd
             txtAppointmentItem.text = item.appointment
             txtCountItem.text = item.count.toString()
             editCountItem.setText(item.editcount.toString())
+
+            switchFullCount.isChecked = false
+            rowItem.setBackgroundColor(Color.WHITE)
+
+            if(item.editcount>0) {
+                rowItem.setBackgroundColor(Color.LTGRAY)
+            }
 
             if (item.count==item.editcount && item.editcount>0) {
                 switchFullCount.isChecked = true
@@ -53,9 +65,11 @@ class MoveItemManfAdapter(context: Context): RecyclerView.Adapter<MoveItemManfAd
             switchFullCount.setOnClickListener {
                 if (switchFullCount.isChecked) {
                     editCountItem.setText(item.count.toString())
+                    rowItem.setBackgroundColor(Color.LTGRAY)
                 }
                 else {
                     editCountItem.setText("0.0")
+                    rowItem.setBackgroundColor(Color.WHITE)
                 }
 
                 t_items[adapterPosition].editcount = editCountItem.text.toString().toDouble()
@@ -74,6 +88,14 @@ class MoveItemManfAdapter(context: Context): RecyclerView.Adapter<MoveItemManfAd
                         if (s.isDigitsOnly()) {
                             t_items[adapterPosition].editcount = s.toString().toDouble()
                             switchFullCount.isChecked = t_items[adapterPosition].editcount==t_items[adapterPosition].count && t_items[adapterPosition].editcount>0
+
+                            if( t_items[adapterPosition].editcount>0) {
+                                rowItem.setBackgroundColor(Color.LTGRAY)
+                            }
+                            else {
+                                rowItem.setBackgroundColor(Color.WHITE)
+                            }
+
                         }
                     }
                 }
@@ -83,6 +105,10 @@ class MoveItemManfAdapter(context: Context): RecyclerView.Adapter<MoveItemManfAd
                 }
 
             })
+
+            itemView.setOnClickListener {
+                rowClickListiner.OnClick(adapterPosition)
+            }
 
         }
     }

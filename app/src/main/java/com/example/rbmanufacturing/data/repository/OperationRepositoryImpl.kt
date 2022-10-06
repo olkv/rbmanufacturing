@@ -19,10 +19,11 @@ class OperationRepositoryImpl: OperationRepository {
             description = "Перемещает произведеную продукцию с производства на склад хранения"))
 
         listFunOperation.add(CFunOperation(
-            name = "Передача материалов в производство",
+            name = "Проверка качества продукции",
             code = "00003",
-            description = "Перемещает материалы со склада в производство"))
+            description = "Проверка качества продукции перед приемкой на склад, регистрация причин отказа в приеме."))
 
+        /*
         listFunOperation.add(CFunOperation(
             name = "Передача продукции в кладовую",
             code = "00004",
@@ -32,6 +33,8 @@ class OperationRepositoryImpl: OperationRepository {
             name = "Раскрой полуфабрикатов плазма",
             code = "00005",
             description = "Создание документа производство без заказа на основании карты раскроя плазменной резки"))
+
+         */
 
         return listFunOperation as ArrayList<CFunOperation>
     }
