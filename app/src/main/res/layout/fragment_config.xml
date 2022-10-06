@@ -62,14 +62,12 @@
             android:hint="Введите пароль"
             android:inputType="numberPassword" />
 
-        <ToggleButton
-            android:id="@+id/btnConnectServer"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Подключение к серверу"
-            android:textOff="Подключиться к серверу"
-            android:textOn="Отключится от сервера" />
+        <Button
+            android:id="@+id/btnSaveConfig"
+            android:layout_marginTop="16dp"
+            android:text="Сохранить настройки"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
