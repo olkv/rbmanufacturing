@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +41,8 @@ class MoveItemManfFragment : Fragment(), RowClickListiner {
 
         vmMoveItemMan = ViewModelProvider(this)[MoveItemManfViewModel::class.java]
 
+        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
+
         val rcvItemMoveManf = view.findViewById<RecyclerView>(R.id.rcvItemMoveManf)
         val adapter = MoveItemManfAdapter(view.context, this)
 
@@ -47,16 +51,26 @@ class MoveItemManfFragment : Fragment(), RowClickListiner {
         rcvItemMoveManf?.adapter = adapter
 
         lifecycleScope.launch {
-
             vmMoveItemMan.listItemWarehouse.collect {list ->
-
                 //Log.d("MYLOG", "Количество записей: ${list.size.toString()}")
                 adapter.setItemManf(list)
-
             }
-
-
         }
+
+
+        lifecycleScope.launch {
+            vmMoveItemMan.isLoading.collect {isLoading ->
+                if(isLoading) {
+                    progressBar.visibility = View.VISIBLE
+                    progressBar.animate().start()
+                } else {
+                    progressBar.animate().cancel()
+                    progressBar.visibility = View.GONE
+                }
+            }
+        }
+
+
 
         val btnPushItemsManf = view.findViewById<FloatingActionButton>(R.id.btnPushItemsManf)
 

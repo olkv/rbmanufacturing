@@ -23,6 +23,7 @@ object RetrofitClient {
 //соединяем описание интерфейсов с ретрофит объектом и указаем конкретной строки URL для работы с серфисами
 object Common {
     private const val BASE_URL = "http://31.25.243.2/ERP_RB0/hs/manf/"
+
     val retrofitService: RetrofitServices
         get() = RetrofitClient.getClient(BASE_URL).create(RetrofitServices::class.java)
 }

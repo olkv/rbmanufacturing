@@ -20,6 +20,9 @@ class MoveItemManfViewModel:ViewModel() {
     private val listItemWarwhouseState = MutableStateFlow(mutableListOf<CItemWarehouse>())
     var listItemWarehouse: MutableStateFlow<MutableList<CItemWarehouse>> = listItemWarwhouseState
 
+    private val isLoadingState = MutableStateFlow<Boolean>(value = false)
+    var isLoading: MutableStateFlow<Boolean> = isLoadingState
+
     private val itemWarehouseRepositoryImpl = ItemWarehouseRepositoryImpl()
     private val getItemWarehouseUseCase = GetItemWarehouseUseCase(itemWarehouseRepository = itemWarehouseRepositoryImpl)
 
@@ -33,15 +36,19 @@ class MoveItemManfViewModel:ViewModel() {
 
     private fun getAllItemWarehouseManf(username: String) {
 
+        isLoadingState.value = true
+
         val mService = Common.retrofitService
         mService.getListWarehouseManf(username = username).enqueue(object : Callback<MutableList<CItemWarehouse>> {
             override fun onFailure(call: Call<MutableList<CItemWarehouse>>, t: Throwable) {
+                isLoadingState.value = false
                 Log.d("MYLOG","Ошибка получения")
             }
 
             override fun onResponse(call: Call<MutableList<CItemWarehouse>>, response: Response<MutableList<CItemWarehouse>>) {
                 val body = response.body() as MutableList<CItemWarehouse>
                 listItemWarwhouseState.value = body
+                isLoadingState.value = false
             }
         })
 
@@ -52,8 +59,7 @@ class MoveItemManfViewModel:ViewModel() {
 
         viewModelScope.launch {
             //itemList = GetItemWarehouseManf()
-            //listItemWarwhouseState.value = itemList
-
+            isLoadingState.value = false
             getAllItemWarehouseManf("oleg")
         }
 
@@ -62,6 +68,8 @@ class MoveItemManfViewModel:ViewModel() {
 
     fun pushSelectItemWarehouseManf(selectItem: MutableList<CItemWarehouse>) {
         Log.d("MYLOG", "Count list ${selectItem.size} elements")
+
+        isLoadingState.value = true
 
         val gson = GsonBuilder()
             .setPrettyPrinting()
@@ -75,10 +83,13 @@ class MoveItemManfViewModel:ViewModel() {
 
             override fun onFailure(call: Call<CResult>, t: Throwable) {
                 Log.d("MYLOG","Ошибка получения ${t.message}")
+                isLoadingState.value = false
             }
 
             override fun onResponse(call: Call<CResult>, response: Response<CResult>) {
                 val body = response.body() as CResult
+
+                isLoadingState.value = false
 
                 Log.d("MYLOG","Result : ${body.res}")
 
