@@ -1,9 +1,12 @@
 package com.example.rbmanufacturing.presentation.opmaster
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.models.CItemOperationMaster
@@ -15,11 +18,29 @@ class OperationMasterAdapter(context: Context, val rowClickListiner: RowClickLis
     val inflater: LayoutInflater = LayoutInflater.from(context)
     var t_items =  mutableListOf<CItemOperationMaster>()
 
+
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+
+        val txtNumberDoc = view.findViewById<TextView>(R.id.txtNumberDoc)
+        val txtDateDoc = view.findViewById<TextView>(R.id.txtDateDoc)
+        val txtDescriptionDoc = view.findViewById<TextView>(R.id.txtDescriptionDoc)
+        val txtDepartmantDoc = view.findViewById<TextView>(R.id.txtDepartmantDoc)
+        val crdvOtchetMaster = view.findViewById<CardView>(R.id.crdvOtchetMaster)
+
 
         fun bind(item: CItemOperationMaster) {
 
+            txtNumberDoc.text = item.number.toInt().toString()
+            txtDateDoc.text = "от "+item.date
+            txtDescriptionDoc.text = item.description
+            txtDepartmantDoc.text = item.department
 
+
+            crdvOtchetMaster.setCardBackgroundColor(Color.WHITE)
+
+            if(item.isAddTask) {
+                crdvOtchetMaster.setCardBackgroundColor(Color.LTGRAY)
+            }
 
             itemView.setOnClickListener {
                 rowClickListiner.OnClick(adapterPosition)

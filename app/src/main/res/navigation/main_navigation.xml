@@ -20,8 +20,12 @@
     <fragment
         android:id="@+id/operationMaster"
         android:name="com.example.rbmanufacturing.presentation.opmaster.OperationMaster"
-        android:label="Отчет мастера смены"
-        tools:layout="@layout/fragment_operation_master" />
+        android:label="Отчеты мастеров смен"
+        tools:layout="@layout/fragment_operation_master">
+        <action
+            android:id="@+id/action_operationMaster_to_docMasterFragment"
+            app:destination="@id/docMasterFragment" />
+    </fragment>
     <fragment
         android:id="@+id/configFragment"
         android:name="com.example.rbmanufacturing.presentation.config.ConfigFragment"
@@ -32,4 +36,22 @@
         android:name="com.example.rbmanufacturing.presentation.moveitemmanf.MoveItemManfFragment"
         android:label="Передача продукции из производства"
         tools:layout="@layout/fragment_move_item_manf" />
+    <fragment
+        android:id="@+id/docMasterFragment"
+        android:name="com.example.rbmanufacturing.presentation.docmaster.DocMasterFragment"
+        android:label="Отчет мастера"
+        tools:layout="@layout/fragment_doc_master">
+        <argument
+            android:name="uid"
+            android:defaultValue="0"
+            app:argType="string" />
+        <argument
+            android:name="docnumber"
+            app:argType="string"
+            android:defaultValue="0" />
+        <argument
+            android:name="docdate"
+            app:argType="string"
+            android:defaultValue="01.01.0001" />
+    </fragment>
 </navigation>

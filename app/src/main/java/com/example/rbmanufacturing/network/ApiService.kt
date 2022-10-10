@@ -1,5 +1,6 @@
 package com.example.rbmanufacturing.network
 
+import com.example.rbmanufacturing.domain.models.CItemOperationMaster
 import com.example.rbmanufacturing.domain.models.CItemWarehouse
 import com.example.rbmanufacturing.domain.models.CResult
 import retrofit2.Call
@@ -24,6 +25,9 @@ interface RetrofitServices {
     @FormUrlEncoded
     @POST("pushitemmanf/{username}")
     fun pushItemWarehouseManf(@Field("strJson") strJson: String, @Path("username") username: String): Call<CResult>
+
+    @GET("getlistoperationmaster/{username}")
+    fun getListOperationMaster(@Path("username") username: String): Call<MutableList<CItemOperationMaster>>
 
 }
 

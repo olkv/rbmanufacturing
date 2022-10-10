@@ -2,47 +2,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingTop="16px"
     android:paddingBottom="16px">
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txtNameOperation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Наименование операции"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txtDescriptionOperation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Описание операции"
-            android:textSize="10sp" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="8dp"
-            android:background="?android:attr/listDivider" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="70dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/txtCodeOperation"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtCodeOperation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Код операции" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Код операции" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtNameOperation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Наименование операции"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDescriptionOperation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Описание операции"
+                android:textSize="10sp" />
+
+        </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="8dp"
+        android:background="?android:attr/listDivider" />
 
 </LinearLayout>
