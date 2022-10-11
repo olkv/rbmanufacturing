@@ -1,5 +1,6 @@
 package com.example.rbmanufacturing.presentation.docmaster
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,14 +14,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
+import com.example.rbmanufacturing.domain.repository.RowClickListiner
 import com.example.rbmanufacturing.presentation.opmaster.OperationMasterViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
 private const val ARG_UID = "uid"
 private const val ARG_DOCNUMBER = "docnumber"
 private const val ARG_DOCDATE = "docdate"
 
-class DocMasterFragment : Fragment() {
+class DocMasterFragment : Fragment(), RowClickListiner {
     private var uid: String? = null
     private var docnumber: String? = null
     private var docdate: String? = null
@@ -57,12 +60,24 @@ class DocMasterFragment : Fragment() {
 
         val progressBarDocMaster = view.findViewById<ProgressBar>(R.id.progressBarDocMaster)
         val txtNameDoc = view.findViewById<TextView>(R.id.txtNameDoc)
+        val btnCloseDocMaster = view.findViewById<FloatingActionButton>(R.id.btnCloseDocMaster)
+        val btnSendDocMasterTo1C = view.findViewById<FloatingActionButton>(R.id.btnSendDocMasterTo1C)
 
         val rcvDocMaster = view.findViewById<RecyclerView>(R.id.rcvDocMaster)
         rcvDocMaster?.hasFixedSize()
         rcvDocMaster?.layoutManager = LinearLayoutManager(view.context)
 
         txtNameDoc.text = "$docnumber от $docdate"
+
+        val adapter = DocMasterAdapter(view.context, this)
+        rcvDocMaster?.adapter = adapter
+
+        lifecycleScope.launch {
+            vmDocMaster.docMaster.collect {list ->
+                //Log.d("MYLOG", "Количество записей: ${list.size.toString()}")
+                adapter.setDocMaster(list)
+            }
+        }
 
 
         lifecycleScope.launch {
@@ -77,7 +92,35 @@ class DocMasterFragment : Fragment() {
             }
         }
 
+        vmDocMaster.getDocument()
 
+        btnSendDocMasterTo1C.setOnClickListener {
+            val t_docmaster = adapter.t_items
+
+            if(t_docmaster.isNotEmpty()) {
+
+                val dlgYesNo = AlertDialog.Builder(it.context)
+                dlgYesNo.setTitle("Перенос данных")
+                dlgYesNo.setMessage("Сохранить изменения в 1С:ERP ?")
+                dlgYesNo.setPositiveButton("Да") {dialog, id ->
+
+
+                    vmDocMaster.updateDocMaster(docMaster = t_docmaster)
+
+                    dialog.cancel()
+                }
+
+                dlgYesNo.setNegativeButton("Нет") {dialog, id ->
+                    dialog.cancel()
+                }
+
+                dlgYesNo.create()
+
+                dlgYesNo.show()
+
+            }
+
+        }
 
     }
 
@@ -93,4 +136,9 @@ class DocMasterFragment : Fragment() {
                 }
             }
     }
+
+    override fun OnClick(rowid: Int) {
+        Log.d("MYLOG","Click ROW id $rowid")
+    }
+
 }

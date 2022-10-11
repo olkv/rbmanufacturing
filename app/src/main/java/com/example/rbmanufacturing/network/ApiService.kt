@@ -29,5 +29,12 @@ interface RetrofitServices {
     @GET("getlistoperationmaster/{username}")
     fun getListOperationMaster(@Path("username") username: String): Call<MutableList<CItemOperationMaster>>
 
+    @GET("docmaster/{uid}")
+    fun getDocMaster(@Path("uid") uid: String): Call<MutableList<CItemWarehouse>>
+
+    @FormUrlEncoded
+    @POST("updatedocmaster/{uid}")
+    fun updateDocMaster(@Field("strJson") strJson: String, @Path("uid") uid: String): Call<CResult>
+
 }
 
