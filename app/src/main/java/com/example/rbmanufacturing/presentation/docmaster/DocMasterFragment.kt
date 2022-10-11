@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.repository.RowClickListiner
-import com.example.rbmanufacturing.presentation.opmaster.OperationMasterViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -119,6 +118,28 @@ class DocMasterFragment : Fragment(), RowClickListiner {
                 dlgYesNo.show()
 
             }
+
+        }
+
+        btnCloseDocMaster.setOnClickListener {
+
+            val dlgYesNo = AlertDialog.Builder(it.context)
+            dlgYesNo.setTitle("Закрытие отчета мастера смены")
+            dlgYesNo.setMessage("Закрыть отчет мастера смены ?")
+            dlgYesNo.setIcon(R.drawable.ic_commit)
+            dlgYesNo.setPositiveButton("Да") {dialog, id ->
+
+                dialog.cancel()
+            }
+
+            dlgYesNo.setNegativeButton("Нет") {dialog, id ->
+                dialog.cancel()
+            }
+
+            dlgYesNo.create()
+
+            dlgYesNo.show()
+
 
         }
 

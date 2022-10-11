@@ -62,8 +62,8 @@ class MoveItemManfAdapter(context: Context, val rowClickListiner: RowClickListin
             }
 
             //Переключатель если включен, тогда все количество, если нет тогда 0
-            switchFullCount.setOnClickListener {
-                if (switchFullCount.isChecked) {
+            switchFullCount.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
                     editCountItem.setText(item.count.toString())
                     rowItem.setBackgroundColor(Color.LTGRAY)
                 }
