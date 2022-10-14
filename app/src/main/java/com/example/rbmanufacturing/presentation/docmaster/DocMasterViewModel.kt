@@ -18,6 +18,9 @@ class DocMasterViewModel: ViewModel() {
     private val isLoadingState = MutableStateFlow<Boolean>(value = false)
     var isLoading: MutableStateFlow<Boolean> = isLoadingState
 
+    private val isCloseDocMasterState = MutableStateFlow<Boolean>(value = false)
+    var isCloseDocMaster: MutableStateFlow<Boolean> = isCloseDocMasterState
+
     private val docMasterState = MutableStateFlow(mutableListOf<CItemWarehouse>())
     var docMaster: MutableStateFlow<MutableList<CItemWarehouse>> = docMasterState
 
@@ -73,10 +76,10 @@ class DocMasterViewModel: ViewModel() {
         Log.d("MYLOG", "JSON - $jsonStr")
 
         val mService = Common.retrofitService
-        mService.updateDocMaster (strJson = jsonStr, uid = uid).enqueue(object : Callback<CResult> {
+        mService.updateDocMaster(strJson = jsonStr, uid = uid).enqueue(object : Callback<CResult> {
 
             override fun onFailure(call: Call<CResult>, t: Throwable) {
-                Log.d("MYLOG","Ошибка получения ${t.message}")
+                Log.d("MYLOG", "Ошибка получения ${t.message}")
                 isLoadingState.value = false
             }
 
@@ -85,15 +88,43 @@ class DocMasterViewModel: ViewModel() {
 
                 isLoadingState.value = false
 
-                Log.d("MYLOG","Result : ${body.res}")
+                Log.d("MYLOG", "Result : ${body.res}")
 
-                if(body.res=="OK") {
+                if (body.res == "OK") {
                     getDocument()
+                }
+
+            }
+        })
+    }
+
+    fun closeDocMaster() {
+
+        isLoadingState.value = true
+
+        val mService = Common.retrofitService
+        mService.closeDocMaster(uid = uid).enqueue(object : Callback<CResult> {
+
+            override fun onFailure(call: Call<CResult>, t: Throwable) {
+                Log.d("MYLOG", "Ошибка получения ${t.message}")
+                isLoadingState.value = false
+            }
+
+            override fun onResponse(call: Call<CResult>, response: Response<CResult>) {
+                val body = response.body() as CResult
+
+                isLoadingState.value = false
+
+                Log.d("MYLOG", "Result : ${body.res}")
+
+                if (body.res == "OK") {
+                    isCloseDocMasterState.value = true
                 }
 
             }
         })
 
     }
+
 
 }

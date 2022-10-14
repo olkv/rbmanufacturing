@@ -39,11 +39,11 @@ class ConfigFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPreferences = view.context.getSharedPreferences("RbManConfig",Context.MODE_PRIVATE)
+        val sharedPreferences = activity?.getSharedPreferences("RbManConfig",Context.MODE_PRIVATE)
 
-        urlConnect = sharedPreferences.getString("urlConnect","http://192.168.1.1/")!!
-        userPassword = sharedPreferences.getString("userPassword","")!!
-        userName = sharedPreferences.getString("userName","noname")!!
+        urlConnect = sharedPreferences?.getString("urlConnect","http://31.25.243.2/")!!
+        userPassword = sharedPreferences?.getString("userPassword","")!!
+        userName = sharedPreferences?.getString("userName","noname")!!
 
         val txtURLConnect = view.findViewById<TextInputEditText>(R.id.editURLConnect)
         txtURLConnect.setText(urlConnect)

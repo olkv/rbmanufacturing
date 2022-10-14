@@ -130,7 +130,10 @@ class DocMasterFragment : Fragment(), RowClickListiner {
             dlgYesNo.setPositiveButton("Да") {dialog, id ->
 
                 dialog.cancel()
+                vmDocMaster.closeDocMaster()
+
             }
+
 
             dlgYesNo.setNegativeButton("Нет") {dialog, id ->
                 dialog.cancel()

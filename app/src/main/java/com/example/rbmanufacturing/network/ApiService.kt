@@ -36,5 +36,8 @@ interface RetrofitServices {
     @POST("updatedocmaster/{uid}")
     fun updateDocMaster(@Field("strJson") strJson: String, @Path("uid") uid: String): Call<CResult>
 
+    @GET("closedocmaster/{uid}")
+    fun closeDocMaster(@Path("uid") uid: String): Call<CResult>
+
 }
 

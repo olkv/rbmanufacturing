@@ -2,6 +2,7 @@ package com.example.rbmanufacturing.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.prefs.Preferences
 
 
 //Общий объект для работы с Retrofit2, создает объект и подключает конвертор JSON
