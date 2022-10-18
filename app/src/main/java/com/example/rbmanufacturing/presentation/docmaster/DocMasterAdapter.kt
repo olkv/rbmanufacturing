@@ -4,20 +4,22 @@ import android.content.Context
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Switch
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.core.text.isDigitsOnly
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.models.CItemWarehouse
+import com.example.rbmanufacturing.domain.repository.RowChangeListiner
 import com.example.rbmanufacturing.domain.repository.RowClickListiner
 
-class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner): RecyclerView.Adapter<DocMasterAdapter.ViewHolder>() {
+class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner, val rowChangeListiner: RowChangeListiner): RecyclerView.Adapter<DocMasterAdapter.ViewHolder>() {
 
     val inflater: LayoutInflater = LayoutInflater.from(context)
     var t_items = mutableListOf<CItemWarehouse>()//operationArray
@@ -31,7 +33,7 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
         val txtAppointmentItem = view.findViewById<TextView>(R.id.txtAppointmentItem)
         val txtCountItem = view.findViewById<TextView>(R.id.txtCountItem)
         val editCountItem = view.findViewById<EditText>(R.id.editCountItem)
-        val switchFullCount = view.findViewById<Switch>(R.id.switchFullCount)
+        val btnAllCount = view.findViewById<ToggleButton>(R.id.btnAllCount)
         val rowItem = view.findViewById<LinearLayout>(R.id.rowItem)
 
 
@@ -44,7 +46,7 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
             txtCountItem.text = item.count.toString()
             editCountItem.setText(item.editcount.toString())
 
-            switchFullCount.isChecked = false
+            btnAllCount.isChecked = false
             rowItem.setBackgroundColor(Color.WHITE)
 
             if(item.editcount>0) {
@@ -52,16 +54,14 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
             }
 
             if (item.count==item.editcount && item.editcount>0) {
-                switchFullCount.isChecked = true
-            }
-            1
-            itemView.setOnClickListener {
-                //Log.d("MYLOG",operationItem.code)
-                //itemClickListener.OnClick(operationItem.code)
+                btnAllCount.isChecked = true
             }
 
             //Переключатель если включен, тогда все количество, если нет тогда 0
-            switchFullCount.setOnCheckedChangeListener { buttonView, isChecked ->
+            //switchFullCount.setOnCheckedChangeListener { buttonView, isChecked ->
+            btnAllCount.setOnClickListener {
+
+                val isChecked = btnAllCount.isChecked
 
                 if (isChecked) {
                     editCountItem.setText(item.count.toString())
@@ -73,6 +73,10 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
                 }
 
                 t_items[adapterPosition].editcount = editCountItem.text.toString().toDouble()
+
+                rowChangeListiner.onChange(adapterPosition)
+
+                Log.d("MYLOG", "Set editcount is checked $adapterPosition = ${t_items[adapterPosition].editcount}")
 
             }
 
@@ -86,8 +90,11 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
 
                     if(s!!.isNotEmpty()) {
                         if (s.isDigitsOnly()) {
+
                             t_items[adapterPosition].editcount = s.toString().toDouble()
-                            switchFullCount.isChecked = t_items[adapterPosition].editcount==t_items[adapterPosition].count && t_items[adapterPosition].editcount>0
+                            btnAllCount.isChecked = t_items[adapterPosition].editcount==t_items[adapterPosition].count && t_items[adapterPosition].editcount>0
+
+                            Log.d("MYLOG","Position $adapterPosition = ${t_items[adapterPosition].editcount}")
 
                             if( t_items[adapterPosition].editcount>0) {
                                 rowItem.setBackgroundColor(Color.LTGRAY)
@@ -95,6 +102,8 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
                             else {
                                 rowItem.setBackgroundColor(Color.WHITE)
                             }
+
+                            rowChangeListiner.onChange(adapterPosition)
 
                         }
                     }

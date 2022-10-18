@@ -9,11 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
+import com.example.rbmanufacturing.domain.repository.RowChangeListiner
 import com.example.rbmanufacturing.domain.repository.RowClickListiner
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
@@ -22,7 +25,7 @@ private const val ARG_UID = "uid"
 private const val ARG_DOCNUMBER = "docnumber"
 private const val ARG_DOCDATE = "docdate"
 
-class DocMasterFragment : Fragment(), RowClickListiner {
+class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
     private var uid: String? = null
     private var docnumber: String? = null
     private var docdate: String? = null
@@ -68,7 +71,7 @@ class DocMasterFragment : Fragment(), RowClickListiner {
 
         txtNameDoc.text = "$docnumber от $docdate"
 
-        val adapter = DocMasterAdapter(view.context, this)
+        val adapter = DocMasterAdapter(view.context, this, this)
         rcvDocMaster?.adapter = adapter
 
         lifecycleScope.launch {
@@ -88,6 +91,20 @@ class DocMasterFragment : Fragment(), RowClickListiner {
                     progressBarDocMaster.animate().cancel()
                     progressBarDocMaster.visibility = View.GONE
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            vmDocMaster.isCloseDocMaster.collect {isClose ->
+                if(isClose) {
+                    findNavController().navigate(R.id.action_docMasterFragment_to_operationMaster)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            vmDocMaster.enableCloseDocMaster.collect {isEnable ->
+                btnCloseDocMaster.isVisible = isEnable
             }
         }
 
@@ -163,6 +180,11 @@ class DocMasterFragment : Fragment(), RowClickListiner {
 
     override fun OnClick(rowid: Int) {
         Log.d("MYLOG","Click ROW id $rowid")
+    }
+
+    // CallBack функция признак изменения строки, для того чтобы скрыть кнопку Закрытия отчета
+    override fun onChange(rowid: Int) {
+        vmDocMaster.editRow(rowid = rowid)
     }
 
 }

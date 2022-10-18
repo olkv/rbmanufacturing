@@ -21,6 +21,10 @@ class DocMasterViewModel: ViewModel() {
     private val isCloseDocMasterState = MutableStateFlow<Boolean>(value = false)
     var isCloseDocMaster: MutableStateFlow<Boolean> = isCloseDocMasterState
 
+    //Признак изменения в табличной части документа
+    private val enableCloseDocMasterState = MutableStateFlow<Boolean>(value = true)
+    var enableCloseDocMaster: MutableStateFlow<Boolean> = enableCloseDocMasterState
+
     private val docMasterState = MutableStateFlow(mutableListOf<CItemWarehouse>())
     var docMaster: MutableStateFlow<MutableList<CItemWarehouse>> = docMasterState
 
@@ -32,6 +36,10 @@ class DocMasterViewModel: ViewModel() {
 
     fun setUIDDoc(uid: String) {
         this.uid = uid
+    }
+
+    fun editRow(rowid: Int) {
+        enableCloseDocMasterState.value = false
     }
 
     private fun getDocMaster(uid: String) {
@@ -91,6 +99,7 @@ class DocMasterViewModel: ViewModel() {
                 Log.d("MYLOG", "Result : ${body.res}")
 
                 if (body.res == "OK") {
+                    enableCloseDocMasterState.value = true
                     getDocument()
                 }
 
@@ -119,6 +128,8 @@ class DocMasterViewModel: ViewModel() {
 
                 if (body.res == "OK") {
                     isCloseDocMasterState.value = true
+                } else {
+                    Log.d("MYLOG", body.res)
                 }
 
             }

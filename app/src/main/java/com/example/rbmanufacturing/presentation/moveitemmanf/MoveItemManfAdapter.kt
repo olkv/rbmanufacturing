@@ -8,10 +8,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Switch
-import android.widget.TextView
+import android.widget.*
 import androidx.core.text.isDigitsOnly
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
@@ -32,7 +29,7 @@ class MoveItemManfAdapter(context: Context, val rowClickListiner: RowClickListin
         val txtAppointmentItem = view.findViewById<TextView>(R.id.txtAppointmentItem)
         val txtCountItem = view.findViewById<TextView>(R.id.txtCountItem)
         val editCountItem = view.findViewById<EditText>(R.id.editCountItem)
-        val switchFullCount = view.findViewById<Switch>(R.id.switchFullCount)
+        val btnAllCount = view.findViewById<ToggleButton>(R.id.btnAllCount)
         val rowItem = view.findViewById<LinearLayout>(R.id.rowItem)
 
 
@@ -45,7 +42,7 @@ class MoveItemManfAdapter(context: Context, val rowClickListiner: RowClickListin
             txtCountItem.text = item.count.toString()
             editCountItem.setText(item.editcount.toString())
 
-            switchFullCount.isChecked = false
+            btnAllCount.isChecked = false
             rowItem.setBackgroundColor(Color.WHITE)
 
             if(item.editcount>0) {
@@ -53,7 +50,7 @@ class MoveItemManfAdapter(context: Context, val rowClickListiner: RowClickListin
             }
 
             if (item.count==item.editcount && item.editcount>0) {
-                switchFullCount.isChecked = true
+                btnAllCount.isChecked = true
             }
 1
             itemView.setOnClickListener {
@@ -62,7 +59,9 @@ class MoveItemManfAdapter(context: Context, val rowClickListiner: RowClickListin
             }
 
             //Переключатель если включен, тогда все количество, если нет тогда 0
-            switchFullCount.setOnCheckedChangeListener { buttonView, isChecked ->
+            btnAllCount.setOnClickListener {
+
+                val isChecked = btnAllCount.isChecked
                 if (isChecked) {
                     editCountItem.setText(item.count.toString())
                     rowItem.setBackgroundColor(Color.LTGRAY)
@@ -87,7 +86,7 @@ class MoveItemManfAdapter(context: Context, val rowClickListiner: RowClickListin
                     if(s!!.isNotEmpty()) {
                         if (s.isDigitsOnly()) {
                             t_items[adapterPosition].editcount = s.toString().toDouble()
-                            switchFullCount.isChecked = t_items[adapterPosition].editcount==t_items[adapterPosition].count && t_items[adapterPosition].editcount>0
+                            btnAllCount.isChecked = t_items[adapterPosition].editcount==t_items[adapterPosition].count && t_items[adapterPosition].editcount>0
 
                             if( t_items[adapterPosition].editcount>0) {
                                 rowItem.setBackgroundColor(Color.LTGRAY)

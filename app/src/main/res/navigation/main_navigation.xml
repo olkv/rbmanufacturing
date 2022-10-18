@@ -53,5 +53,9 @@
             android:name="docdate"
             app:argType="string"
             android:defaultValue="01.01.0001" />
+        <action
+            android:id="@+id/action_docMasterFragment_to_operationMaster"
+            app:destination="@id/operationMaster"
+            app:popUpTo="@id/operationFragment" />
     </fragment>
 </navigation>
