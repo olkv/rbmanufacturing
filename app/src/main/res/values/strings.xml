@@ -2,4 +2,7 @@
     <string name="app_name">Ryabina Manufacturing</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="seveTo1CERP">Сохранить изменения в 1С:ERP</string>
+    <string name="closeDocMaster">Закрыть отчет мастера смены</string>
+    <string name="NumAndDateDoc">Номер и дата документа</string>
 </resources>

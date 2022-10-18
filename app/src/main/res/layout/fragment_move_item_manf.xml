@@ -26,9 +26,10 @@
             android:id="@+id/btnPushItemsManf"
             android:layout_width="wrap_content"
             android:layout_height="173dp"
+            android:contentDescription="@string/seveTo1CERP"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:clickable="true"
+            android:focusable="auto"
             android:src="@android:drawable/ic_menu_send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
