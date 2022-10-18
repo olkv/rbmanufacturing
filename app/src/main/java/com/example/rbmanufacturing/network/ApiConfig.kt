@@ -16,8 +16,8 @@ object RetrofitClient {
         //Настраиваем время отклика ссоединения
         val okHttpClient = OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(180, TimeUnit.SECONDS)
+                .writeTimeout(180, TimeUnit.SECONDS)
                 .build()
 
         if (retrofit == null) {

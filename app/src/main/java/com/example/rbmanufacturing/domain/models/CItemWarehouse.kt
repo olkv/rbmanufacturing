@@ -9,5 +9,6 @@ data class CItemWarehouse(
     var custom: String = "",        //заказ производства
     var appointment: String= "",    //назначение
     var count: Double = 0.0,        //необходимое количество
-    var editcount: Double = 0.0     //выбранное количество
+    var editcount: Double = 0.0,    //выбранное количество
+    var codestr: Int = 0            //Код строки
 )

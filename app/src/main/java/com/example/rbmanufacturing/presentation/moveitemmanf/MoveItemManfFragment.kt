@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -63,9 +64,16 @@ class MoveItemManfFragment : Fragment(), RowClickListiner {
                 if(isLoading) {
                     progressBar.visibility = View.VISIBLE
                     progressBar.animate().start()
+                    //Отключаем сенсор для блокировки управления
+                    activity?.window?.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
                 } else {
                     progressBar.animate().cancel()
                     progressBar.visibility = View.GONE
+
+                    //Включаем сенсор
+                    activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
                 }
             }
         }
