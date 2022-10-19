@@ -19,6 +19,7 @@ import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.models.CItemWarehouse
 import com.example.rbmanufacturing.domain.repository.RowClickListiner
 import com.example.rbmanufacturing.network.getURLConnection
+import com.example.rbmanufacturing.network.getUserName
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -44,6 +45,7 @@ class MoveItemManfFragment : Fragment(), RowClickListiner {
         vmMoveItemMan = ViewModelProvider(this)[MoveItemManfViewModel::class.java]
 
         vmMoveItemMan.setURLConnection(getURLConnection(view.context))
+        vmMoveItemMan.setUserName(getUserName(view.context))
 
         val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
 

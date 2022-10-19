@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -66,9 +67,9 @@ class OperationFragment : Fragment(), ItemClickListener {
             findNavController().navigate(R.id.action_operationFragment_to_moveItemManfFragment)
 
 
-        if(code=="00003")
-            getListWarehouse("oleg")
-
+        if(code=="00003") {
+            Toast.makeText(context, "Раздел находится в разработке", Toast.LENGTH_SHORT).show()
+        }
 
 
     }

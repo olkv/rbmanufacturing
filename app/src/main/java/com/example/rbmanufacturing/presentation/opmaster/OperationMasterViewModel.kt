@@ -21,6 +21,7 @@ class OperationMasterViewModel:ViewModel() {
     var listItemOperation: MutableStateFlow<MutableList<CItemOperationMaster>> = listItemOperationMaster
 
     private var urlConnection: String = ""
+    private var userName: String = "oleg"
 
     init {
 
@@ -28,17 +29,21 @@ class OperationMasterViewModel:ViewModel() {
     }
 
 
+    fun setUserName(username: String) {
+        userName = username
+    }
+
     fun setURLConnection(urlConnectionService: String) {
         urlConnection = urlConnectionService
         Log.d("MYLOG","URL Connection = $urlConnection")
     }
 
-    private fun getAllItemOperationMaster(username: String) {
+    private fun getAllItemOperationMaster() {
 
         isLoadingState.value = true
 
-        val mService = Common.retrofitService
-        mService.getListOperationMaster(username = username).enqueue(object :
+        val mService = Common(urlConnection).retrofitService
+        mService.getListOperationMaster(username = userName).enqueue(object :
             Callback<MutableList<CItemOperationMaster>> {
             override fun onFailure(call: Call<MutableList<CItemOperationMaster>>, t: Throwable) {
                 isLoadingState.value = false
@@ -60,7 +65,7 @@ class OperationMasterViewModel:ViewModel() {
         viewModelScope.launch {
             //itemList = GetItemWarehouseManf()
             isLoadingState.value = false
-            getAllItemOperationMaster("oleg")
+            getAllItemOperationMaster()
         }
 
     }

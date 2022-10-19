@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.repository.RowClickListiner
+import com.example.rbmanufacturing.network.getURLConnection
 import kotlinx.coroutines.launch
 
 class OperationMaster : Fragment(), RowClickListiner {
@@ -40,6 +41,7 @@ class OperationMaster : Fragment(), RowClickListiner {
 
         vmOperationMaster = ViewModelProvider(this)[OperationMasterViewModel::class.java]
 
+        vmOperationMaster.setURLConnection(getURLConnection(view.context))
 
         val progressBarMasterOperation = view.findViewById<ProgressBar>(R.id.progressBarMasterOperation)
 

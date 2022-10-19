@@ -16,8 +16,8 @@ object RetrofitClient {
         //Настраиваем время отклика ссоединения
         val okHttpClient = OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(180, TimeUnit.SECONDS)
-                .writeTimeout(180, TimeUnit.SECONDS)
+                .readTimeout(240, TimeUnit.SECONDS)
+                .writeTimeout(240, TimeUnit.SECONDS)
                 .build()
 
         if (retrofit == null) {
@@ -33,9 +33,9 @@ object RetrofitClient {
 
 
 //соединяем описание интерфейсов с ретрофит объектом и указаем конкретной строки URL для работы с серфисами
-object Common {
+class Common(val BASE_URL: String) {
     //private const val BASE_URL = "http://31.25.243.2/ERP_RB0/hs/manf/"
-    private const val BASE_URL = "http://31.25.243.2/erp_r/hs/manf/"
+    //private const val BASE_URL = "http://31.25.243.2/erp_r/hs/manf/"
 
 
     val retrofitService: RetrofitServices

@@ -32,7 +32,6 @@ class DocMasterViewModel: ViewModel() {
 
     private var urlConnection: String = ""
 
-
     fun setURLConnection(urlConnectionService: String) {
         urlConnection = urlConnectionService
         Log.d("MYLOG","URL Connection = $urlConnection")
@@ -51,7 +50,7 @@ class DocMasterViewModel: ViewModel() {
 
         isLoadingState.value = true
 
-        val mService = Common.retrofitService
+        val mService = Common(urlConnection).retrofitService
         mService.getDocMaster(uid = uid).enqueue(object :
             Callback<MutableList<CItemWarehouse>> {
             override fun onFailure(call: Call<MutableList<CItemWarehouse>>, t: Throwable) {
@@ -88,7 +87,7 @@ class DocMasterViewModel: ViewModel() {
         val jsonStr = gson.toJson(docMaster)
         Log.d("MYLOG", "JSON - $jsonStr")
 
-        val mService = Common.retrofitService
+        val mService = Common(urlConnection).retrofitService
         mService.updateDocMaster(strJson = jsonStr, uid = uid).enqueue(object : Callback<CResult> {
 
             override fun onFailure(call: Call<CResult>, t: Throwable) {
@@ -116,7 +115,7 @@ class DocMasterViewModel: ViewModel() {
 
         isLoadingState.value = true
 
-        val mService = Common.retrofitService
+        val mService = Common(urlConnection).retrofitService
         mService.closeDocMaster(uid = uid).enqueue(object : Callback<CResult> {
 
             override fun onFailure(call: Call<CResult>, t: Throwable) {

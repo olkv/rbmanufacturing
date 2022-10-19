@@ -29,6 +29,7 @@ class MoveItemManfViewModel:ViewModel() {
     private var itemList = mutableListOf<CItemWarehouse>()
 
     private var urlConnection: String = ""
+    private var userName: String = "oleg"
 
     init {
 
@@ -36,17 +37,21 @@ class MoveItemManfViewModel:ViewModel() {
 
     }
 
+    fun setUserName(username: String) {
+        userName = username
+    }
+
     fun setURLConnection(urlConnectionService: String) {
         urlConnection = urlConnectionService
         Log.d("MYLOG","URL Connection = $urlConnection")
     }
 
-    private fun getAllItemWarehouseManf(username: String) {
+    private fun getAllItemWarehouseManf() {
 
         isLoadingState.value = true
 
-        val mService = Common.retrofitService
-        mService.getListWarehouseManf(username = username).enqueue(object : Callback<MutableList<CItemWarehouse>> {
+        val mService = Common(urlConnection).retrofitService
+        mService.getListWarehouseManf(username = userName).enqueue(object : Callback<MutableList<CItemWarehouse>> {
             override fun onFailure(call: Call<MutableList<CItemWarehouse>>, t: Throwable) {
                 isLoadingState.value = false
                 Log.d("MYLOG","Ошибка получения")
@@ -67,7 +72,7 @@ class MoveItemManfViewModel:ViewModel() {
         viewModelScope.launch {
             //itemList = GetItemWarehouseManf()
             isLoadingState.value = false
-            getAllItemWarehouseManf("oleg")
+            getAllItemWarehouseManf()
         }
 
     }
@@ -85,8 +90,8 @@ class MoveItemManfViewModel:ViewModel() {
         val jsonStr = gson.toJson(selectItem)
         Log.d("MYLOG", "JSON - $jsonStr")
 
-        val mService = Common.retrofitService
-        mService.pushItemWarehouseManf(strJson = jsonStr, username = "oleg").enqueue(object : Callback<CResult> {
+        val mService = Common(urlConnection).retrofitService
+        mService.pushItemWarehouseManf(strJson = jsonStr, username = userName).enqueue(object : Callback<CResult> {
 
             override fun onFailure(call: Call<CResult>, t: Throwable) {
                 Log.d("MYLOG","Ошибка получения ${t.message}")
