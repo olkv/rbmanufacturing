@@ -37,6 +37,7 @@ object Common {
     //private const val BASE_URL = "http://31.25.243.2/ERP_RB0/hs/manf/"
     private const val BASE_URL = "http://31.25.243.2/erp_r/hs/manf/"
 
+
     val retrofitService: RetrofitServices
         get() = RetrofitClient.getClient(BASE_URL).create(RetrofitServices::class.java)
 }

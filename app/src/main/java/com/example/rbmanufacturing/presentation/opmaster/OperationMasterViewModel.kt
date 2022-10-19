@@ -20,10 +20,18 @@ class OperationMasterViewModel:ViewModel() {
     private val listItemOperationMaster = MutableStateFlow(mutableListOf<CItemOperationMaster>())
     var listItemOperation: MutableStateFlow<MutableList<CItemOperationMaster>> = listItemOperationMaster
 
+    private var urlConnection: String = ""
+
     init {
-        getAllListOperationMaster()
+
+       //getAllListOperationMaster()
     }
 
+
+    fun setURLConnection(urlConnectionService: String) {
+        urlConnection = urlConnectionService
+        Log.d("MYLOG","URL Connection = $urlConnection")
+    }
 
     private fun getAllItemOperationMaster(username: String) {
 

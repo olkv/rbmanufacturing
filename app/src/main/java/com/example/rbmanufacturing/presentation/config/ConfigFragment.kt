@@ -9,9 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.SharedValues
 import com.example.rbmanufacturing.R
 import com.google.android.material.textfield.TextInputEditText
 
@@ -21,6 +19,7 @@ class ConfigFragment : Fragment() {
     var userName: String = ""
     var userPassword: String = ""
     var urlConnect: String = ""
+    var baseName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +42,9 @@ class ConfigFragment : Fragment() {
 
         urlConnect = sharedPreferences?.getString("urlConnect","http://31.25.243.2/")!!
         userPassword = sharedPreferences?.getString("userPassword","")!!
+        baseName = sharedPreferences?.getString("baseName","ERP_RB0")!!
         userName = sharedPreferences?.getString("userName","noname")!!
+
 
         val txtURLConnect = view.findViewById<TextInputEditText>(R.id.editURLConnect)
         txtURLConnect.setText(urlConnect)
@@ -51,17 +52,23 @@ class ConfigFragment : Fragment() {
         val txtUserName = view.findViewById<EditText>(R.id.editUserName)
         txtUserName.setText(userName)
 
+        val txtBaseName = view.findViewById<EditText>(R.id.editBaseName)
+        txtBaseName.setText(baseName)
+
         val txtUserPassword = view.findViewById<EditText>(R.id.editUserPassword)
         txtUserPassword.setText(userPassword)
 
         val btnSaveConfig = view.findViewById<Button>(R.id.btnSaveConfig)
         btnSaveConfig.setOnClickListener {
+
             val editConfig = sharedPreferences.edit()
             editConfig.putString("urlConnect", txtURLConnect.text.toString())
             editConfig.putString("userPassword",txtUserPassword.text.toString())
             editConfig.putString("userName",txtUserName.text.toString())
+            editConfig.putString("baseName",txtBaseName.text.toString())
             Toast.makeText(it.context,"Настройки сохранены",Toast.LENGTH_SHORT).show()
             editConfig.commit()
+
         }
 
 

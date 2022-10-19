@@ -57,6 +57,8 @@ class OperationMaster : Fragment(), RowClickListiner {
 
         rcvOperationMaster?.adapter = adaptorOperationMaster
 
+        vmOperationMaster.getAllListOperationMaster()
+
         lifecycleScope.launch {
             vmOperationMaster.listItemOperation.collect {list ->
                 //Log.d("MYLOG", "Количество записей: ${list.size.toString()}")

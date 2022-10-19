@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.repository.RowChangeListiner
 import com.example.rbmanufacturing.domain.repository.RowClickListiner
+import com.example.rbmanufacturing.network.getURLConnection
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -58,6 +59,9 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
         super.onViewCreated(view, savedInstanceState)
 
         vmDocMaster = ViewModelProvider(this)[DocMasterViewModel::class.java]
+
+        //Установить в модели адрес подключения
+        vmDocMaster.setURLConnection(getURLConnection(view.context))
 
         vmDocMaster.setUIDDoc(uid = uid!!)
 

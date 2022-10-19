@@ -28,10 +28,17 @@ class MoveItemManfViewModel:ViewModel() {
 
     private var itemList = mutableListOf<CItemWarehouse>()
 
+    private var urlConnection: String = ""
+
     init {
 
-        getAllListWarehouseManf()
+        //getAllListWarehouseManf()
 
+    }
+
+    fun setURLConnection(urlConnectionService: String) {
+        urlConnection = urlConnectionService
+        Log.d("MYLOG","URL Connection = $urlConnection")
     }
 
     private fun getAllItemWarehouseManf(username: String) {

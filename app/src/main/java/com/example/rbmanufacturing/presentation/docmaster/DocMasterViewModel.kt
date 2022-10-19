@@ -30,8 +30,12 @@ class DocMasterViewModel: ViewModel() {
 
     private var uid: String = ""
 
-    init {
+    private var urlConnection: String = ""
 
+
+    fun setURLConnection(urlConnectionService: String) {
+        urlConnection = urlConnectionService
+        Log.d("MYLOG","URL Connection = $urlConnection")
     }
 
     fun setUIDDoc(uid: String) {
@@ -43,6 +47,7 @@ class DocMasterViewModel: ViewModel() {
     }
 
     private fun getDocMaster(uid: String) {
+
 
         isLoadingState.value = true
 

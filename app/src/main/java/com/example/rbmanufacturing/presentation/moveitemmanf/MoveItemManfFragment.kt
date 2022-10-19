@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.models.CItemWarehouse
 import com.example.rbmanufacturing.domain.repository.RowClickListiner
+import com.example.rbmanufacturing.network.getURLConnection
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -42,6 +43,8 @@ class MoveItemManfFragment : Fragment(), RowClickListiner {
 
         vmMoveItemMan = ViewModelProvider(this)[MoveItemManfViewModel::class.java]
 
+        vmMoveItemMan.setURLConnection(getURLConnection(view.context))
+
         val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
 
         val rcvItemMoveManf = view.findViewById<RecyclerView>(R.id.rcvItemMoveManf)
@@ -50,6 +53,9 @@ class MoveItemManfFragment : Fragment(), RowClickListiner {
         rcvItemMoveManf?.hasFixedSize()
         rcvItemMoveManf?.layoutManager = LinearLayoutManager(view.context)
         rcvItemMoveManf?.adapter = adapter
+
+        vmMoveItemMan.getAllListWarehouseManf()
+
 
         lifecycleScope.launch {
             vmMoveItemMan.listItemWarehouse.collect {list ->

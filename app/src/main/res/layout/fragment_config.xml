@@ -30,6 +30,19 @@
                 android:hint="Введите строку подключения к серверу" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            app:helperText="Имя базы данных">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editBaseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Введите имя базы" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/txtUserName"
             android:layout_width="match_parent"
