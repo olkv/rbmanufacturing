@@ -15,50 +15,47 @@ import retrofit2.Response
 
 class DocMasterViewModel: ViewModel() {
 
+    //признак загрузки документа
     private val isLoadingState = MutableStateFlow<Boolean>(value = false)
     var isLoading: MutableStateFlow<Boolean> = isLoadingState
 
+    //признак закрытия отчета мастера, при true закрывается фрагмент документа и делается переход
+    //на списаок документов
     private val isCloseDocMasterState = MutableStateFlow<Boolean>(value = false)
     var isCloseDocMaster: MutableStateFlow<Boolean> = isCloseDocMasterState
 
-    //Признак изменения в табличной части документа
+    //доступность команды закрытия отчета мастера
     private val enableCloseDocMasterState = MutableStateFlow<Boolean>(value = true)
     var enableCloseDocMaster: MutableStateFlow<Boolean> = enableCloseDocMasterState
 
+    //содержание отчета мастера
     private val docMasterState = MutableStateFlow(mutableListOf<CItemWarehouse>())
     var docMaster: MutableStateFlow<MutableList<CItemWarehouse>> = docMasterState
 
+    //ссылка на UID документа
     private var uid: String = ""
 
+    //строка подключения к сервису
     private var urlConnection: String = ""
 
-    fun setURLConnection(urlConnectionService: String) {
-        urlConnection = urlConnectionService
-        Log.d("MYLOG","URL Connection = $urlConnection")
-    }
+    //внутренняя функция чтения данных документа из http сервиса через Retrofit2 бибилиотеку
+    private fun getDocMasterRepositoryImp() {
 
-    fun setUIDDoc(uid: String) {
-        this.uid = uid
-    }
-
-    fun editRow(rowid: Int) {
-        enableCloseDocMasterState.value = false
-    }
-
-    private fun getDocMaster(uid: String) {
-
-
+        //установка статуса загрузки, отображается индикатор ProgressBar
         isLoadingState.value = true
 
         val mService = Common(urlConnection).retrofitService
         mService.getDocMaster(uid = uid).enqueue(object :
             Callback<MutableList<CItemWarehouse>> {
+
             override fun onFailure(call: Call<MutableList<CItemWarehouse>>, t: Throwable) {
+                //ошибка выполнения запроса, убираем ProgressBar выводим в лог ошибку
                 isLoadingState.value = false
-                Log.d("MYLOG","Ошибка получения")
+                Log.d("MYLOG","Ошибка получения ${t.message}")
             }
 
             override fun onResponse(call: Call<MutableList<CItemWarehouse>>, response: Response<MutableList<CItemWarehouse>>) {
+                //успешное выполнение запроса, получаем список из тела запроса, убираем ProgressBar, результаты заносим в переменную StateFlow
                 val body = response.body() as MutableList<CItemWarehouse>
                 docMasterState.value = body
                 isLoadingState.value = false
@@ -67,14 +64,6 @@ class DocMasterViewModel: ViewModel() {
 
     }
 
-    fun getDocument() {
-
-        viewModelScope.launch {
-            isLoadingState.value = false
-            getDocMaster(uid = uid)
-        }
-
-    }
 
     fun updateDocMaster(docMaster: MutableList<CItemWarehouse>) {
 
@@ -139,6 +128,36 @@ class DocMasterViewModel: ViewModel() {
             }
         })
 
+    }
+
+
+    //ПУБЛИЧНЫЕ МЕТОДЫ
+
+    //внешняя функция обновления (получения) даных содержимого документа
+    //запускаем в отдельном потоке, устанавливаем признак загрузки StateFlow
+    fun getDocument() {
+
+        viewModelScope.launch {
+            isLoadingState.value = false
+            getDocMasterRepositoryImp()
+        }
+
+    }
+
+    //функция установки строки подключения
+    fun setURLConnection(urlConnectionService: String) {
+        urlConnection = urlConnectionService
+        Log.d("MYLOG","URL Connection = $urlConnection")
+    }
+
+    //функция установки UID документа
+    fun setUIDDoc(uid: String) {
+        this.uid = uid
+    }
+
+    //функция установки признака изменения строки и отключения команды закрытия отчета мастера
+    fun editRow(rowid: Int) {
+        enableCloseDocMasterState.value = false
     }
 
 

@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
-import com.example.rbmanufacturing.network.getListWarehouse
 import kotlinx.coroutines.launch
 
 class OperationFragment : Fragment(), ItemClickListener {
