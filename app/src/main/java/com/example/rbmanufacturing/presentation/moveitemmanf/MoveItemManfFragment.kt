@@ -20,6 +20,7 @@ import com.example.rbmanufacturing.domain.models.CItemWarehouse
 import com.example.rbmanufacturing.domain.repository.RowClickListiner
 import com.example.rbmanufacturing.network.getURLConnection
 import com.example.rbmanufacturing.network.getUserName
+import com.example.rbmanufacturing.presentation.docmaster.DocMasterViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -42,10 +43,8 @@ class MoveItemManfFragment : Fragment(), RowClickListiner {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vmMoveItemMan = ViewModelProvider(this)[MoveItemManfViewModel::class.java]
-
-        vmMoveItemMan.setURLConnection(getURLConnection(view.context))
-        vmMoveItemMan.setUserName(getUserName(view.context))
+        val vmMoveItemManfViewModelFactory = MoveItemManfViewModelFactory(getUserName(view.context), getURLConnection(view.context))
+        vmMoveItemMan = ViewModelProvider(this, vmMoveItemManfViewModelFactory)[MoveItemManfViewModel::class.java]
 
         val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
 
@@ -56,7 +55,14 @@ class MoveItemManfFragment : Fragment(), RowClickListiner {
         rcvItemMoveManf?.layoutManager = LinearLayoutManager(view.context)
         rcvItemMoveManf?.adapter = adapter
 
-        vmMoveItemMan.getAllListWarehouseManf()
+
+        lifecycleScope.launch {
+            vmMoveItemMan.requestResult.collect {result ->
+                if(result.isNotEmpty()) {
+                    Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
 
 
         lifecycleScope.launch {

@@ -58,12 +58,11 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vmDocMaster = ViewModelProvider(this)[DocMasterViewModel::class.java]
+        //Инициализируем фабрику модели и передаем параметр
+        val vmDocMasterViewModelFactory = DocMasterViewModelFactory(uid!!, getURLConnection(view.context))
+        //создаем ViewModel на основании произвольной фабрики
+        vmDocMaster = ViewModelProvider(this, vmDocMasterViewModelFactory)[DocMasterViewModel::class.java]
 
-        //Установить в модели адрес подключения
-        vmDocMaster.setURLConnection(getURLConnection(view.context))
-
-        vmDocMaster.setUIDDoc(uid = uid!!)
 
         val progressBarDocMaster = view.findViewById<ProgressBar>(R.id.progressBarDocMaster)
         val txtNameDoc = view.findViewById<TextView>(R.id.txtNameDoc)
@@ -119,7 +118,7 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
             }
         }
 
-        vmDocMaster.getDocument()
+        //vmDocMaster.getDocument()
 
         btnSendDocMasterTo1C.setOnClickListener {
             val t_docmaster = adapter.t_items

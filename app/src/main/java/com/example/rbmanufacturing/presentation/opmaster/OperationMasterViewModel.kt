@@ -12,7 +12,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class OperationMasterViewModel:ViewModel() {
+class OperationMasterViewModel(_userName: String, _urlConnnection: String):ViewModel() {
 
     private val isLoadingState = MutableStateFlow<Boolean>(value = false)
     var isLoading: MutableStateFlow<Boolean> = isLoadingState
@@ -25,20 +25,15 @@ class OperationMasterViewModel:ViewModel() {
 
     init {
 
-       //getAllListOperationMaster()
+        this.urlConnection = _urlConnnection
+        this.userName = _userName
+
+        getAllListOperationMaster()
     }
 
 
-    fun setUserName(username: String) {
-        userName = username
-    }
 
-    fun setURLConnection(urlConnectionService: String) {
-        urlConnection = urlConnectionService
-        Log.d("MYLOG","URL Connection = $urlConnection")
-    }
-
-    private fun getAllItemOperationMaster() {
+    private fun getAllListOperationMasterRepositoryImp() {
 
         isLoadingState.value = true
 
@@ -65,7 +60,7 @@ class OperationMasterViewModel:ViewModel() {
         viewModelScope.launch {
             //itemList = GetItemWarehouseManf()
             isLoadingState.value = false
-            getAllItemOperationMaster()
+            getAllListOperationMasterRepositoryImp()
         }
 
     }

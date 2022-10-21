@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.repository.RowClickListiner
 import com.example.rbmanufacturing.network.getURLConnection
+import com.example.rbmanufacturing.network.getUserName
+import com.example.rbmanufacturing.presentation.moveitemmanf.MoveItemManfViewModelFactory
 import kotlinx.coroutines.launch
 
 class OperationMaster : Fragment(), RowClickListiner {
@@ -39,10 +41,13 @@ class OperationMaster : Fragment(), RowClickListiner {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vmOperationMaster = ViewModelProvider(this)[OperationMasterViewModel::class.java]
 
-        vmOperationMaster.setURLConnection(getURLConnection(view.context))
+        val vmOperationMasterViewModelFactory = OperationMasterViewModelFactory(getUserName(view.context), getURLConnection(view.context))
+        vmOperationMaster = ViewModelProvider(this, vmOperationMasterViewModelFactory)[OperationMasterViewModel::class.java]
 
+        //vmOperationMaster.setURLConnection(getURLConnection(view.context))
+
+        val vmMoveItemManfViewModelFactory = MoveItemManfViewModelFactory(getUserName(view.context), getURLConnection(view.context))
         val progressBarMasterOperation = view.findViewById<ProgressBar>(R.id.progressBarMasterOperation)
 
         val rcvOperationMaster = view.findViewById<RecyclerView>(R.id.rcvOperationMaster)
@@ -59,7 +64,7 @@ class OperationMaster : Fragment(), RowClickListiner {
 
         rcvOperationMaster?.adapter = adaptorOperationMaster
 
-        vmOperationMaster.getAllListOperationMaster()
+        //vmOperationMaster.getAllListOperationMaster()
 
         lifecycleScope.launch {
             vmOperationMaster.listItemOperation.collect {list ->
@@ -81,20 +86,6 @@ class OperationMaster : Fragment(), RowClickListiner {
             }
         }
 
-
-        /*
-        Вы можете использовать GridLayoutManager в классе адаптера. используйте его в adapter constracter.Второй параметр - количество столбцов.
-
-        mGridLayoutManager=new GridLayoutManager(context,2);
-        позже установите Layoutmanager в классе адаптера.Вы можете использовать этот код.
-
-        @Override
-        public void onAttachedToRecyclerView(@NonNull final RecyclerView recyclerView) {
-            super.onAttachedToRecyclerView(recyclerView);
-            recyclerView.setLayoutManager(mGridLayoutManager);
-        }
-
-         */
 
     }
 

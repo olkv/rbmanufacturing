@@ -13,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DocMasterViewModel: ViewModel() {
+class DocMasterViewModel(_uid: String, _urlConnection: String): ViewModel() {
 
     //признак загрузки документа
     private val isLoadingState = MutableStateFlow<Boolean>(value = false)
@@ -37,6 +37,13 @@ class DocMasterViewModel: ViewModel() {
 
     //строка подключения к сервису
     private var urlConnection: String = ""
+
+    init {
+        this.uid = _uid
+        this.urlConnection = _urlConnection
+
+        getDocument()
+    }
 
     //внутренняя функция чтения данных документа из http сервиса через Retrofit2 бибилиотеку
     private fun getDocMasterRepositoryImp() {
@@ -65,7 +72,7 @@ class DocMasterViewModel: ViewModel() {
     }
 
 
-    fun updateDocMaster(docMaster: MutableList<CItemWarehouse>) {
+    private fun updateDocMasterRepositoryImp(docMaster: MutableList<CItemWarehouse>) {
 
         isLoadingState.value = true
 
@@ -100,7 +107,7 @@ class DocMasterViewModel: ViewModel() {
         })
     }
 
-    fun closeDocMaster() {
+    private fun closeDocMasterRepositoryImp() {
 
         isLoadingState.value = true
 
@@ -144,16 +151,24 @@ class DocMasterViewModel: ViewModel() {
 
     }
 
-    //функция установки строки подключения
-    fun setURLConnection(urlConnectionService: String) {
-        urlConnection = urlConnectionService
-        Log.d("MYLOG","URL Connection = $urlConnection")
+    fun updateDocMaster(docMaster: MutableList<CItemWarehouse>) {
+
+        viewModelScope.launch {
+            isLoadingState.value = false
+            updateDocMasterRepositoryImp(docMaster)
+        }
+
     }
 
-    //функция установки UID документа
-    fun setUIDDoc(uid: String) {
-        this.uid = uid
+    fun closeDocMaster() {
+
+        viewModelScope.launch {
+            isLoadingState.value = false
+            closeDocMasterRepositoryImp()
+        }
+
     }
+
 
     //функция установки признака изменения строки и отключения команды закрытия отчета мастера
     fun editRow(rowid: Int) {
