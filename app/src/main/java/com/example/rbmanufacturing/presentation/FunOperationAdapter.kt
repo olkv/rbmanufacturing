@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
@@ -20,11 +21,13 @@ class FunOperationAdapter(context: Context, val itemClickListener: ItemClickList
         val txtNameOperation = view.findViewById<TextView>(R.id.txtNameOperation)
         val txtCodeOperation = view.findViewById<TextView>(R.id.txtCodeOperation)
         val txtDescriptionOperation = view.findViewById<TextView>(R.id.txtDescriptionOperation)
+        val imageView = view.findViewById<ImageView>(R.id.imageView)
 
         fun bind(operationItem:CFunOperation) {
             txtNameOperation.text = operationItem.name
             txtCodeOperation.text = operationItem.code
             txtDescriptionOperation.text = operationItem.description
+            imageView.setImageResource(operationItem.imageId)
 
             itemView.setOnClickListener {
                 //Log.d("MYLOG",operationItem.code)

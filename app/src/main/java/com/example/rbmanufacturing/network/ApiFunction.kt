@@ -1,6 +1,10 @@
 package com.example.rbmanufacturing.network
 
 import android.content.Context
+import android.os.Build
+import android.telephony.TelephonyManager
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.getSystemService
 
 
 fun getURLConnection(context: Context): String {
@@ -20,7 +24,11 @@ fun getUserName(context: Context): String {
     return sharedPreferences?.getString("userName", "oleg")!!
 }
 
+fun getIdTelephone(context: Context): String {
+    var IMEI: String = ""
 
+    return IMEI
+}
 
 
 

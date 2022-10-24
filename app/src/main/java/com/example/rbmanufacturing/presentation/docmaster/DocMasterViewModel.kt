@@ -32,6 +32,10 @@ class DocMasterViewModel(_uid: String, _urlConnection: String): ViewModel() {
     private val docMasterState = MutableStateFlow(mutableListOf<CItemWarehouse>())
     var docMaster: MutableStateFlow<MutableList<CItemWarehouse>> = docMasterState
 
+    //состояние выполнения операции
+    private val requestResultState = MutableStateFlow<String>(value = "")
+    var requestResult: MutableStateFlow<String> = requestResultState
+
     //ссылка на UID документа
     private var uid: String = ""
 
@@ -58,6 +62,7 @@ class DocMasterViewModel(_uid: String, _urlConnection: String): ViewModel() {
             override fun onFailure(call: Call<MutableList<CItemWarehouse>>, t: Throwable) {
                 //ошибка выполнения запроса, убираем ProgressBar выводим в лог ошибку
                 isLoadingState.value = false
+                requestResultState.value = "Ошибка получения ${t.message}"
                 Log.d("MYLOG","Ошибка получения ${t.message}")
             }
 
@@ -87,8 +92,9 @@ class DocMasterViewModel(_uid: String, _urlConnection: String): ViewModel() {
         mService.updateDocMaster(strJson = jsonStr, uid = uid).enqueue(object : Callback<CResult> {
 
             override fun onFailure(call: Call<CResult>, t: Throwable) {
-                Log.d("MYLOG", "Ошибка получения ${t.message}")
                 isLoadingState.value = false
+                requestResultState.value = "Ошибка получения ${t.message}"
+                Log.d("MYLOG", "Ошибка получения ${t.message}")
             }
 
             override fun onResponse(call: Call<CResult>, response: Response<CResult>) {
@@ -115,8 +121,9 @@ class DocMasterViewModel(_uid: String, _urlConnection: String): ViewModel() {
         mService.closeDocMaster(uid = uid).enqueue(object : Callback<CResult> {
 
             override fun onFailure(call: Call<CResult>, t: Throwable) {
-                Log.d("MYLOG", "Ошибка получения ${t.message}")
+                requestResultState.value = "Ошибка получения ${t.message}"
                 isLoadingState.value = false
+                Log.d("MYLOG", "Ошибка получения ${t.message}")
             }
 
             override fun onResponse(call: Call<CResult>, response: Response<CResult>) {

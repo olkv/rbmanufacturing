@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -77,6 +78,15 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
 
         val adapter = DocMasterAdapter(view.context, this, this)
         rcvDocMaster?.adapter = adapter
+
+
+        lifecycleScope.launch {
+            vmDocMaster.requestResult.collect {result ->
+                if(result.isNotEmpty()) {
+                    Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
 
         lifecycleScope.launch {
             vmDocMaster.docMaster.collect {list ->

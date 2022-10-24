@@ -21,6 +21,7 @@ class MoveItemManfViewModel(_userName: String, _urlConnection: String):ViewModel
     private val isLoadingState = MutableStateFlow<Boolean>(value = false)
     var isLoading: MutableStateFlow<Boolean> = isLoadingState
 
+    //состояние выполнения операции
     private val requestResultState = MutableStateFlow<String>(value = "")
     var requestResult: MutableStateFlow<String> = requestResultState
 
@@ -78,6 +79,7 @@ class MoveItemManfViewModel(_userName: String, _urlConnection: String):ViewModel
 
             override fun onFailure(call: Call<CResult>, t: Throwable) {
                 Log.d("MYLOG","Ошибка получения ${t.message}")
+                requestResultState.value = "Ошибка получения ${t.message}"
                 isLoadingState.value = false
             }
 

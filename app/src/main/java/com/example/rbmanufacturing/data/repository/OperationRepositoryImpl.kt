@@ -1,5 +1,6 @@
 package com.example.rbmanufacturing.data.repository
 
+import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.models.CFunOperation
 import com.example.rbmanufacturing.domain.repository.OperationRepository
 
@@ -11,17 +12,20 @@ class OperationRepositoryImpl: OperationRepository {
         listFunOperation.add(CFunOperation(
             name = "Отчет мастера смены",
             code = "00001",
-            description = "Подтверждение выпуска продукции по заданиям(этапам) производства"))
+            description = "Подтверждение выпуска продукции по заданиям(этапам) производства",
+            imageId = R.drawable.ic_baseline_content_paste_24))
 
         listFunOperation.add(CFunOperation(
             name = "Передача продукции из производства",
             code = "00002",
-            description = "Перемещает произведеную продукцию с производства на склад хранения"))
+            description = "Перемещает произведеную продукцию с производства на склад хранения",
+            imageId = R.drawable.ic_baseline_output_24))
 
         listFunOperation.add(CFunOperation(
             name = "Проверка качества продукции",
             code = "00003",
-            description = "Проверка качества продукции перед приемкой на склад, регистрация причин отказа в приеме."))
+            description = "Проверка качества продукции перед приемкой на склад, регистрация причин отказа в приеме.",
+            R.drawable.ic_baseline_check_circle_outline_24))
 
         /*
         listFunOperation.add(CFunOperation(

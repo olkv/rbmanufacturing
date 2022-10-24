@@ -20,6 +20,10 @@ class OperationMasterViewModel(_userName: String, _urlConnnection: String):ViewM
     private val listItemOperationMaster = MutableStateFlow(mutableListOf<CItemOperationMaster>())
     var listItemOperation: MutableStateFlow<MutableList<CItemOperationMaster>> = listItemOperationMaster
 
+    //состояние выполнения операции
+    private val requestResultState = MutableStateFlow<String>(value = "")
+    var requestResult: MutableStateFlow<String> = requestResultState
+
     private var urlConnection: String = ""
     private var userName: String = "oleg"
 
@@ -42,6 +46,7 @@ class OperationMasterViewModel(_userName: String, _urlConnnection: String):ViewM
             Callback<MutableList<CItemOperationMaster>> {
             override fun onFailure(call: Call<MutableList<CItemOperationMaster>>, t: Throwable) {
                 isLoadingState.value = false
+                requestResultState.value = "Ошибка получения ${t.message}"
                 Log.d("MYLOG","Ошибка получения : ${t.message}")
             }
 
