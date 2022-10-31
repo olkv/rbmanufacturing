@@ -36,8 +36,8 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
         val btnAllCount = view.findViewById<ToggleButton>(R.id.btnAllCount)
         val rowItem = view.findViewById<LinearLayout>(R.id.rowItem)
 
-
         fun bind(item: CItemWarehouse) {
+
             txtNameItem.text = item.name
             txtParamenerItem.text = item.parameter
             txtStageItem.text = item.stage

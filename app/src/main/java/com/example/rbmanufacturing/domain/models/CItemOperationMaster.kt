@@ -3,10 +3,11 @@ package com.example.rbmanufacturing.domain.models
 import java.util.Date
 
 data class CItemOperationMaster(
-    var uid: String = "",
-    var number: String = "",
-    var date: String = "",
-    var department: String = "",
-    var description: String = "",
-    var isAddTask: Boolean = false
+    var uid: String = "", //уникальный идентификатор документа
+    var number: String = "", //номер
+    var date: String = "", //дата в виде строки
+    var department: String = "", //подразделение
+    var description: String = "", //описание
+    var isAddTask: Boolean = false, //доступен для закрытия
+    var isOTKCheck: Boolean = false //Проверено службой ОТК
 )

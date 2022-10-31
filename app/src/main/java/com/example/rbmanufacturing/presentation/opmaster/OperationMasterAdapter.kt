@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -26,9 +27,15 @@ class OperationMasterAdapter(context: Context, val rowClickListiner: RowClickLis
         val txtDescriptionDoc = view.findViewById<TextView>(R.id.txtDescriptionDoc)
         val txtDepartmantDoc = view.findViewById<TextView>(R.id.txtDepartmantDoc)
         val crdvOtchetMaster = view.findViewById<CardView>(R.id.crdvOtchetMaster)
+        val txtOTK = view.findViewById<TextView>(R.id.txtOTK)
 
 
         fun bind(item: CItemOperationMaster) {
+
+            txtOTK.visibility = View.GONE
+            if(item.isOTKCheck) {
+                txtOTK.visibility = View.VISIBLE
+            }
 
             txtNumberDoc.text = item.number.toInt().toString()
             txtDateDoc.text = "от "+item.date

@@ -4,84 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="vertical"
     tools:context=".presentation.config.ConfigFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Адрес для подключения :" />
-
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:helperText="Адрес может водится с указанием IP адреса так и с использованием доменного имени. Например, http://192.168.1.1/ или http://example.ru/">
+            android:orientation="vertical"
+            android:scrollbars="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editURLConnect"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Адрес для подключения :"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Введите строку подключения к серверу" />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:helperText="Адрес может водится с указанием IP адреса так и с использованием доменного имени. Например, http://192.168.1.1/ или http://example.ru/">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16sp"
-            app:helperText="Имя базы данных">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editURLConnect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Введите строку подключения к серверу" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editBaseName"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Введите имя базы" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="16sp"
+                app:helperText="Имя базы данных">
 
-        <TextView
-            android:id="@+id/txtUserName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:textStyle="bold"
-            android:text="Имя пользоватея :" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editBaseName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Введите имя базы" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editUserName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Введите имя пользователя"
-            android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/txtUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Имя пользоватея :"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txtPasswoord"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textStyle="bold"
-            android:text="Пароль :" />
+            <EditText
+                android:id="@+id/editUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Введите имя пользователя"
+                android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/editUserPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Введите пароль"
-            android:inputType="numberPassword" />
+            <TextView
+                android:id="@+id/txtPasswoord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Пароль :"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnSaveConfig"
-            android:layout_marginTop="16dp"
-            android:text="Сохранить настройки"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/editUserPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Введите пароль"
+                android:inputType="numberPassword" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnSaveConfig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Сохранить настройки" />
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </FrameLayout>
