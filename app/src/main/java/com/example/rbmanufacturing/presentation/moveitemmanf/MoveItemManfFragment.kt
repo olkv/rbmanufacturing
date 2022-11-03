@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +19,6 @@ import com.example.rbmanufacturing.domain.models.CItemWarehouse
 import com.example.rbmanufacturing.domain.repository.RowClickListiner
 import com.example.rbmanufacturing.network.getURLConnection
 import com.example.rbmanufacturing.network.getUserName
-import com.example.rbmanufacturing.presentation.docmaster.DocMasterViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -54,6 +52,32 @@ class MoveItemManfFragment : Fragment(), RowClickListiner {
         rcvItemMoveManf?.hasFixedSize()
         rcvItemMoveManf?.layoutManager = LinearLayoutManager(view.context)
         rcvItemMoveManf?.adapter = adapter
+
+        //SWIPE (удаление) строки
+        //НАЧАЛО БЛОКА
+        /*
+        val mCallBack = object: ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: ViewHolder,
+                target: ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder,  direction: Int) {
+
+                // More code here
+                Log.d("MYLOG", "Delete position ${viewHolder.adapterPosition}")
+
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(mCallBack)
+        itemTouchHelper.attachToRecyclerView(rcvItemMoveManf)
+
+         */
+        //КОНЕЦБЛОКА
 
 
         lifecycleScope.launch {
