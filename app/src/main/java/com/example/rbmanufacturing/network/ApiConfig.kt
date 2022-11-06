@@ -4,7 +4,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import java.util.prefs.Preferences
 
 
 //Общий объект для работы с Retrofit2, создает объект и подключает конвертор JSON

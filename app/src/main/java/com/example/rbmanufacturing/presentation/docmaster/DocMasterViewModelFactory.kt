@@ -3,6 +3,7 @@ package com.example.rbmanufacturing.presentation.docmaster
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
+//Фабрика ViewModel для передачи параметра uid и urlConnection
 class DocMasterViewModelFactory(private val uid: String, private val urlConnection: String): ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

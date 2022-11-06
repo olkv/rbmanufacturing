@@ -22,20 +22,25 @@ interface RetrofitServices {
     @GET("getlistmanf/{username}")
     fun getListWarehouseManf(@Path("username") username: String): Call<MutableList<CItemWarehouse>>
 
+    //Передать в 1С список, на основании которого нужно создать документы Передача из производства
     @FormUrlEncoded
     @POST("pushitemmanf/{username}")
     fun pushItemWarehouseManf(@Field("strJson") strJson: String, @Path("username") username: String): Call<CResult>
 
+    //Получить список Отчетов мастеров смен
     @GET("getlistoperationmaster/{username}")
     fun getListOperationMaster(@Path("username") username: String): Call<MutableList<CItemOperationMaster>>
 
+    //Получить документ отчета мастера смены
     @GET("docmaster/{uid}")
     fun getDocMaster(@Path("uid") uid: String): Call<MutableList<CItemWarehouse>>
 
+    //Передать изменения отчета мастера смены в 1С
     @FormUrlEncoded
     @POST("updatedocmaster/{uid}")
     fun updateDocMaster(@Field("strJson") strJson: String, @Path("uid") uid: String): Call<CResult>
 
+    //Вызвать функцию закрытия отчета мастера смены в 1С
     @GET("closedocmaster/{uid}")
     fun closeDocMaster(@Path("uid") uid: String): Call<CResult>
 

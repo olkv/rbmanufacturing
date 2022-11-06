@@ -26,6 +26,7 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
+        //Получаем ссылки на элементы формы
         val txtNameItem = view.findViewById<TextView>(R.id.txtNameItem)
         val txtParamenerItem = view.findViewById<TextView>(R.id.txtParamenerItem)
         val txtStageItem = view.findViewById<TextView>(R.id.txtStageItem)
@@ -38,6 +39,7 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
 
         fun bind(item: CItemWarehouse) {
 
+            //Заполняем элементы формы данными
             txtNameItem.text = item.name
             txtParamenerItem.text = item.parameter
             txtStageItem.text = item.stage
@@ -49,10 +51,12 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
             btnAllCount.isChecked = false
             rowItem.setBackgroundColor(Color.WHITE)
 
+            //Если конечное количество >0 тогда выделяем другим цветом
             if(item.editcount>0) {
                 rowItem.setBackgroundColor(Color.LTGRAY)
             }
 
+            //Если плановое количество = фактическому, тогда делаем кнопку "Все количество" выделенной
             if (item.count==item.editcount && item.editcount>0) {
                 btnAllCount.isChecked = true
             }
@@ -133,7 +137,7 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var item = t_items[position]
+        val item = t_items[position]
         holder.bind(item)
     }
 

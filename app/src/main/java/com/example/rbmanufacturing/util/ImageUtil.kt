@@ -13,7 +13,7 @@ class ImageUtil {
     }
 
     fun convert(bitmap: Bitmap): String {
-        var outputStream = ByteArrayOutputStream()
+        val outputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream)
 
         return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)

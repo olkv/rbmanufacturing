@@ -24,10 +24,12 @@ import com.example.rbmanufacturing.network.getURLConnection
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
+//Во фрагмент передаем три параметра из списка
 private const val ARG_UID = "uid"
 private const val ARG_DOCNUMBER = "docnumber"
 private const val ARG_DOCDATE = "docdate"
 
+//Наследуем класс не только из фрагмента но и из интерфйсов для вызова CallBack функций
 class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
     private var uid: String? = null
     private var docnumber: String? = null
@@ -80,6 +82,7 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
         rcvDocMaster?.adapter = adapter
 
 
+        //Слушаитель изменения переменной результата вызова функции к сервису
         lifecycleScope.launch {
             vmDocMaster.requestResult.collect {result ->
                 if(result.isNotEmpty()) {
@@ -88,6 +91,8 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
             }
         }
 
+        //Слушатель для изменения содержания документа отчета мастера смены
+        //при изменении передает данные в адаптер
         lifecycleScope.launch {
             vmDocMaster.docMaster.collect {list ->
                 //Log.d("MYLOG", "Количество записей: ${list.size.toString()}")
@@ -96,6 +101,8 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
         }
 
 
+        //Слушатель переменной выполнения запросов к HTTP сервису
+        //при ожидании вызвается ProgreeBar, после завершения ProgressBar скрываем
         lifecycleScope.launch {
             vmDocMaster.isLoading.collect {isLoading ->
                 if(isLoading) {
@@ -114,6 +121,8 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
             }
         }
 
+        //Слушатель переменной закрытия отчета мастера
+        //после успешного закрытия переходим на фрагмент со списком документов
         lifecycleScope.launch {
             vmDocMaster.isCloseDocMaster.collect {isClose ->
                 if(isClose) {
@@ -122,6 +131,7 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
             }
         }
 
+        //Слушатель видимости кнопки закрытия документа отчета мастера смены
         lifecycleScope.launch {
             vmDocMaster.enableCloseDocMaster.collect {isEnable ->
                 btnCloseDocMaster.isVisible = isEnable
@@ -130,6 +140,7 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
 
         //vmDocMaster.getDocument()
 
+        //Нажатие кнопки сохоанения изменений в 1С
         btnSendDocMasterTo1C.setOnClickListener {
             val t_docmaster = adapter.t_items
 
@@ -138,6 +149,7 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
                 val dlgYesNo = AlertDialog.Builder(it.context)
                 dlgYesNo.setTitle("Перенос данных")
                 dlgYesNo.setMessage("Сохранить изменения в 1С:ERP ?")
+                //Добавляем кнопку "Да" и слушатель кнопки
                 dlgYesNo.setPositiveButton("Да") {dialog, id ->
 
 
@@ -146,6 +158,7 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
                     dialog.cancel()
                 }
 
+                //Добавляем кнопку "Нет" и слушатель кнопки
                 dlgYesNo.setNegativeButton("Нет") {dialog, id ->
                     dialog.cancel()
                 }
@@ -158,6 +171,7 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
 
         }
 
+        //Нажатие кнопки Закрытия отчета мастера
         btnCloseDocMaster.setOnClickListener {
 
             val dlgYesNo = AlertDialog.Builder(it.context)
