@@ -67,7 +67,8 @@ class OperationFragment : Fragment(), ItemClickListener {
 
 
         if(code=="00003") {
-            Toast.makeText(context, "Раздел находится в разработке", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "Раздел находится в разработке", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_operationFragment_to_otkDocuments)
         }
 
 

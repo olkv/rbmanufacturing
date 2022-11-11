@@ -13,13 +13,18 @@
         <action
             android:id="@+id/action_operationFragment_to_operationMaster"
             app:destination="@id/operationMaster"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"/>
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_operationFragment_to_moveItemManfFragment"
             app:destination="@id/moveItemManfFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"/>
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_operationFragment_to_otkDocuments"
+            app:destination="@id/otkDocuments"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/operationMaster"
@@ -66,4 +71,9 @@
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"/>
     </fragment>
+    <fragment
+        android:id="@+id/otkDocuments"
+        android:name="com.example.rbmanufacturing.presentation.otk.documents.OtkDocuments"
+        android:label=" Документы ОТК"
+        tools:layout="@layout/fragment_otk_documents" />
 </navigation>

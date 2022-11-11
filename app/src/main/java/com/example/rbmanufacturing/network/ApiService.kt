@@ -2,6 +2,7 @@ package com.example.rbmanufacturing.network
 
 import com.example.rbmanufacturing.domain.models.CItemOperationMaster
 import com.example.rbmanufacturing.domain.models.CItemWarehouse
+import com.example.rbmanufacturing.domain.models.COtkDocument
 import com.example.rbmanufacturing.domain.models.CResult
 import retrofit2.Call
 import retrofit2.http.Field
@@ -43,6 +44,11 @@ interface RetrofitServices {
     //Вызвать функцию закрытия отчета мастера смены в 1С
     @GET("closedocmaster/{uid}")
     fun closeDocMaster(@Path("uid") uid: String): Call<CResult>
+
+
+    //Получить список документов ОТК
+    @GET("getlistotkdocuments/{username}")
+    fun getListOtkDocuments(@Path("username") username: String): Call<MutableList<COtkDocument>>
 
 }
 
