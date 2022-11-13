@@ -75,5 +75,29 @@
         android:id="@+id/otkDocuments"
         android:name="com.example.rbmanufacturing.presentation.otk.documents.OtkDocuments"
         android:label=" Документы ОТК"
-        tools:layout="@layout/fragment_otk_documents" />
+        tools:layout="@layout/fragment_otk_documents" >
+        <action
+            android:id="@+id/action_otkDocuments_to_otkDocFragment"
+            app:destination="@id/otkDocFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/otkDocFragment"
+        android:name="com.example.rbmanufacturing.presentation.otk.document.OtkDocFragment"
+        android:label="Документ"
+        tools:layout="@layout/fragment_otk_doc" >
+        <argument
+            android:name="typedoc"
+            app:argType="string" />
+        <argument
+            android:name="uid"
+            app:argType="string" />
+        <argument
+            android:name="docnumber"
+            app:argType="string" />
+        <argument
+            android:name="docdate"
+            app:argType="string" />
+    </fragment>
 </navigation>

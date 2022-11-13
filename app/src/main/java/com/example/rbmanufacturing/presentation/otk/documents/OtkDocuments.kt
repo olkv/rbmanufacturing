@@ -9,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
@@ -92,10 +94,23 @@ class OtkDocuments : Fragment(), RowClickListiner {
     }
 
     override fun OnClick(rowid: Int) {
-        val type_doc = vmOtkDocuments.listItem.value[rowid].type_doc
+        val typedoc = vmOtkDocuments.listItem.value[rowid].type_doc
         val uid = vmOtkDocuments.listItem.value[rowid].uid
+        val docnumber = vmOtkDocuments.listItem.value[rowid].number
+        val docdate = vmOtkDocuments.listItem.value[rowid].date
 
-        Log.d("MYLOG", "Click type_doc=$type_doc, uid=$uid")
+        Log.d("MYLOG", "Click type_doc=$typedoc, uid=$uid")
+
+
+        val bundle = bundleOf(
+            "typedoc" to typedoc,
+            "uid" to uid,
+            "docnumber" to docnumber,
+            "docdate" to docdate
+        )
+
+        findNavController().navigate(R.id.action_otkDocuments_to_otkDocFragment, bundle)
+
     }
 
 

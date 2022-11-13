@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtNameNom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Наименование номенклатуры"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtNameCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Количество проверяемой номенклатуры :" />
+
+        <TextView
+            android:id="@+id/txtCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="5sp"
+            android:text="0"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtNameDefect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor= "@color/department"
+        android:text="Выявленные дефекты :" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20sp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtNameDefectUst"
+            android:layout_width="120sp"
+            android:layout_height="wrap_content"
+            android:text="Устранимые :" />
+
+        <TextView
+            android:id="@+id/txtCountDefectUst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:paddingStart="5sp"
+            android:text="0" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20sp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtNameDefectNoUst"
+            android:layout_width="120sp"
+            android:layout_height="wrap_content"
+            android:text="Не устранимые :" />
+
+        <TextView
+            android:id="@+id/txtCountDefectNoUst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:paddingStart="5sp"
+            android:text="0" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="16sp"
+        android:background="?android:attr/listDivider" />
+
+
+</LinearLayout>
