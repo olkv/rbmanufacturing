@@ -100,6 +100,13 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
 
                             Log.d("MYLOG","Position $adapterPosition = ${t_items[adapterPosition].editcount}")
 
+                            //Проверяем если установлено макисмально допустимое количество и редактируемое количество > максимального
+                            //тогда редактируемое количество приравниваем к максимальному
+                            if( t_items[adapterPosition].maxcount>0 && t_items[adapterPosition].editcount>t_items[adapterPosition].maxcount) {
+                                t_items[adapterPosition].editcount=t_items[adapterPosition].maxcount
+                            }
+
+
                             if( t_items[adapterPosition].editcount>0) {
                                 rowItem.setBackgroundColor(Color.LTGRAY)
                             }

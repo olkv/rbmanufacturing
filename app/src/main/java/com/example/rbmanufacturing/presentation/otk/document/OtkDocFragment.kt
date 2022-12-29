@@ -6,14 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.network.getURLConnection
-import com.example.rbmanufacturing.presentation.docmaster.DocMasterViewModel
+import kotlinx.coroutines.launch
 
 private const val ARG_TYPEDOC = "typedoc"
 private const val ARG_UID = "uid"
@@ -81,6 +84,46 @@ class OtkDocFragment : Fragment() {
 
         }
 
+        rcvOtkDoc?.adapter = adapter
+
+        //Слушаитель изменения переменной результата вызова функции к сервису
+        lifecycleScope.launch {
+            vmOtkDoc.requestResult.collect {result ->
+                if(result.isNotEmpty()) {
+                    Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
+
+        //Слушатель для изменения содержания документа
+        //при изменении передает данные в адаптер
+        lifecycleScope.launch {
+            vmOtkDoc.docOtk.collect {list ->
+                //Log.d("MYLOG", "Количество записей: ${list.size.toString()}")
+                adapter.setDocOtk(list)
+            }
+        }
+
+        //Слушатель переменной выполнения запросов к HTTP сервису
+        //при ожидании вызвается ProgreeBar, после завершения ProgressBar скрываем
+        lifecycleScope.launch {
+            vmOtkDoc.isLoading.collect {isLoading ->
+                if(isLoading) {
+                    progressBarOtkDoc.visibility = View.VISIBLE
+                    progressBarOtkDoc.animate().start()
+
+                    //Отключаем сенсор для блокировки управления
+                    activity?.window?.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                } else {
+                    progressBarOtkDoc.animate().cancel()
+                    progressBarOtkDoc.visibility = View.GONE
+
+                    //Включаем сенсор
+                    activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                }
+            }
+        }
 
     }
 

@@ -1,9 +1,6 @@
 package com.example.rbmanufacturing.network
 
-import com.example.rbmanufacturing.domain.models.CItemOperationMaster
-import com.example.rbmanufacturing.domain.models.CItemWarehouse
-import com.example.rbmanufacturing.domain.models.COtkDocument
-import com.example.rbmanufacturing.domain.models.CResult
+import com.example.rbmanufacturing.domain.models.*
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -49,6 +46,10 @@ interface RetrofitServices {
     //Получить список документов ОТК
     @GET("getlistotkdocuments/{username}")
     fun getListOtkDocuments(@Path("username") username: String): Call<MutableList<COtkDocument>>
+
+    //Получить содержимое документа ОТК
+    @GET("getitemdocotk/{typedoc}/{uid}")
+    fun getItemDocOtk(@Path("typedoc") typedoc: String, @Path("uid") uid: String ): Call<MutableList<COtkDocItem>>
 
 }
 

@@ -40,7 +40,7 @@ class ConfigFragment : Fragment() {
 
         val sharedPreferences = activity?.getSharedPreferences("RbManConfig",Context.MODE_PRIVATE)
 
-        urlConnect = sharedPreferences?.getString("urlConnect","http://31.25.243.2/")!!
+        urlConnect = sharedPreferences?.getString("urlConnect","http://192.168.1.20/")!!
         userPassword = sharedPreferences?.getString("userPassword","")!!
         baseName = sharedPreferences?.getString("baseName","ERP_RB0")!!
         userName = sharedPreferences?.getString("userName","noname")!!
