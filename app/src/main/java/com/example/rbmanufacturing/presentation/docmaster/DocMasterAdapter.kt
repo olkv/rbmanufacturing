@@ -33,6 +33,7 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
         val txtCustomItem = view.findViewById<TextView>(R.id.txtCustomItem)
         val txtAppointmentItem = view.findViewById<TextView>(R.id.txtAppointmentItem)
         val txtCountItem = view.findViewById<TextView>(R.id.txtCountItem)
+        val txtMaxCountItem = view.findViewById<TextView>(R.id.txtMaxCountItem)
         val editCountItem = view.findViewById<EditText>(R.id.editCountItem)
         val btnAllCount = view.findViewById<ToggleButton>(R.id.btnAllCount)
         val rowItem = view.findViewById<LinearLayout>(R.id.rowItem)
@@ -46,6 +47,7 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
             txtCustomItem.text = item.custom
             txtAppointmentItem.text = item.appointment
             txtCountItem.text = item.count.toString()
+            txtMaxCountItem.text = "(${item.maxcount.toString()})"
             editCountItem.setText(item.editcount.toString())
 
             btnAllCount.isChecked = false
