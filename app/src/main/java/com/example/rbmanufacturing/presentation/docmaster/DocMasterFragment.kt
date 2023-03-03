@@ -28,12 +28,14 @@ import kotlinx.coroutines.launch
 private const val ARG_UID = "uid"
 private const val ARG_DOCNUMBER = "docnumber"
 private const val ARG_DOCDATE = "docdate"
+private const val ARG_ISOTKCHEKED = "isotkchecked"
 
 //Наследуем класс не только из фрагмента но и из интерфйсов для вызова CallBack функций
 class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
     private var uid: String? = null
     private var docnumber: String? = null
     private var docdate: String? = null
+    private var isotkchecked: Boolean? = null
 
     private lateinit var vmDocMaster:  DocMasterViewModel
 
@@ -43,6 +45,7 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
             uid = it.getString(ARG_UID)
             docnumber = it.getString(ARG_DOCNUMBER)
             docdate = it.getString(ARG_DOCDATE)
+            isotkchecked = it.getBoolean(ARG_ISOTKCHEKED)
         }
 
         Log.d("MYLOG","UID document = $uid")
@@ -134,7 +137,7 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
         //Слушатель видимости кнопки закрытия документа отчета мастера смены
         lifecycleScope.launch {
             vmDocMaster.enableCloseDocMaster.collect {isEnable ->
-                btnCloseDocMaster.isVisible = isEnable
+                btnCloseDocMaster.isVisible = isEnable && (isotkchecked == false)
             }
         }
 
@@ -202,12 +205,13 @@ class DocMasterFragment : Fragment(), RowClickListiner, RowChangeListiner {
 
     companion object {
         @JvmStatic
-        fun newInstance(uid: String, docnumber: String, docdate: String) =
+        fun newInstance(uid: String, docnumber: String, docdate: String, isotkchecked: Boolean) =
             DocMasterFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_UID, uid)
                     putString(ARG_DOCNUMBER, docnumber)
                     putString(ARG_DOCDATE, docdate)
+                    putBoolean(ARG_ISOTKCHEKED, isotkchecked)
                 }
             }
     }

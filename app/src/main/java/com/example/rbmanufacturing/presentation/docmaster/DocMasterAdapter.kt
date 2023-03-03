@@ -47,7 +47,7 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
             txtCustomItem.text = item.custom
             txtAppointmentItem.text = item.appointment
             txtCountItem.text = item.count.toString()
-            txtMaxCountItem.text = "(${item.maxcount.toString()})"
+            txtMaxCountItem.text = "(max ${item.maxcount.toString()})"
             editCountItem.setText(item.editcount.toString())
 
             btnAllCount.isChecked = false

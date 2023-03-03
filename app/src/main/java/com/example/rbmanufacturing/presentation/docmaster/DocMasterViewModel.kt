@@ -13,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DocMasterViewModel(_uid: String, _urlConnection: String): ViewModel() {
+class DocMasterViewModel(_uid: String, _urlConnection: String, _isOTKChecked:Boolean=false): ViewModel() {
 
     //признак загрузки документа
     private val isLoadingState = MutableStateFlow<Boolean>(value = false)
@@ -25,7 +25,7 @@ class DocMasterViewModel(_uid: String, _urlConnection: String): ViewModel() {
     var isCloseDocMaster: MutableStateFlow<Boolean> = isCloseDocMasterState
 
     //доступность команды закрытия отчета мастера
-    private val enableCloseDocMasterState = MutableStateFlow<Boolean>(value = true)
+    private val enableCloseDocMasterState = MutableStateFlow<Boolean>(value = _isOTKChecked.not())
     var enableCloseDocMaster: MutableStateFlow<Boolean> = enableCloseDocMasterState
 
     //содержание отчета мастера

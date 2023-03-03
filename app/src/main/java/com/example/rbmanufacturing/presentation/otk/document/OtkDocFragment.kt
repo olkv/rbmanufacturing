@@ -10,8 +10,10 @@ import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
@@ -80,7 +82,25 @@ class OtkDocFragment : Fragment() {
 
         val adapter = OtkDocAdapter(view.context) { rowid ->
 
-            Log.d("MYLOG", "Click ROWID=$rowid")
+            val codeitem = vmOtkDoc.docOtk.value[rowid!!].codestr
+            val nameitem = vmOtkDoc.docOtk.value[rowid!!].name
+            val countitem = vmOtkDoc.docOtk.value[rowid!!].count.toFloat()
+
+            Log.d("MYLOG", "Click ROWID=$rowid  TypeDoc=$typedoc  NameItem=$nameitem")
+
+            //Вызываем фрагмент редактирования дефектов
+            val bundle = bundleOf(
+                "typedoc" to typedoc,
+                "uid" to uid,
+                "docnumber" to docnumber,
+                "docdate" to docdate,
+                "codeitem" to codeitem,
+                "nameitem" to nameitem,
+                "countitem" to countitem
+            )
+
+            findNavController().navigate(R.id.action_otkDocFragment_to_defectFragment, bundle)
+
 
         }
 

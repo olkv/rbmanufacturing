@@ -75,6 +75,7 @@ class MoveItemManfViewModel(_userName: String, _urlConnection: String):ViewModel
         Log.d("MYLOG", "JSON - $jsonStr")
 
         val mService = Common(urlConnection).retrofitService
+
         mService.pushItemWarehouseManf(strJson = jsonStr, username = userName).enqueue(object : Callback<CResult> {
 
             override fun onFailure(call: Call<CResult>, t: Throwable) {
@@ -84,6 +85,7 @@ class MoveItemManfViewModel(_userName: String, _urlConnection: String):ViewModel
             }
 
             override fun onResponse(call: Call<CResult>, response: Response<CResult>) {
+
                 val body = response.body() as CResult
 
                 isLoadingState.value = false
