@@ -7,5 +7,6 @@ data class COtkDocument(
     val date: String = "", //дата в виде строки
     val department: String = "", //подразделение
     val description: String = "", //описание
-    var isOTKCheck: Boolean = false //Проверено службой ОТК
+    var isOTKCheck: Boolean = false, //Проверено службой ОТК
+    var isOTKChecked: Boolean = false //необходимо проверить службой ОТК
 )

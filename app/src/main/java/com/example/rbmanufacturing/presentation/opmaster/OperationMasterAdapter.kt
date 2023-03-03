@@ -5,13 +5,11 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.domain.models.CItemOperationMaster
-import com.example.rbmanufacturing.domain.models.CItemWarehouse
 import com.example.rbmanufacturing.domain.repository.RowClickListiner
 
 class OperationMasterAdapter(context: Context, val rowClickListiner: RowClickListiner): RecyclerView.Adapter<OperationMasterAdapter.ViewHolder>() {

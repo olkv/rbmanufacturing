@@ -70,6 +70,9 @@
             app:popUpTo="@id/operationFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"/>
+        <argument
+            android:name="isOTKChecked"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/otkDocuments"
@@ -99,5 +102,35 @@
         <argument
             android:name="docdate"
             app:argType="string" />
+        <action
+            android:id="@+id/action_otkDocFragment_to_defectFragment"
+            app:destination="@id/defectFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/defectFragment"
+        android:name="com.example.rbmanufacturing.presentation.otk.defect.DefectFragment"
+        android:label="Дефекты"
+        tools:layout="@layout/fragment_defect" >
+        <argument
+            android:name="codeitem"
+            app:argType="integer" />
+        <argument
+            android:name="typedoc"
+            app:argType="string" />
+        <argument
+            android:name="uid"
+            app:argType="string" />
+        <argument
+            android:name="docnumber"
+            app:argType="string" />
+        <argument android:name="docdate" />
+        <argument
+            android:name="nameitem"
+            app:argType="string" />
+        <argument
+            android:name="countitem"
+            app:argType="float" />
     </fragment>
 </navigation>
