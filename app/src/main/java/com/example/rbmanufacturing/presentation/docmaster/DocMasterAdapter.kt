@@ -59,7 +59,7 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
             }
 
             //Если плановое количество = фактическому, тогда делаем кнопку "Все количество" выделенной
-            if (item.count==item.editcount && item.editcount>0) {
+            if (item.count<=item.editcount && item.editcount>0) {
                 btnAllCount.isChecked = true
             }
 
