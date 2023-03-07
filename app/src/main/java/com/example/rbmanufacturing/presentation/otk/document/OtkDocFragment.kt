@@ -1,5 +1,6 @@
 package com.example.rbmanufacturing.presentation.otk.document
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.network.getURLConnection
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
 private const val ARG_TYPEDOC = "typedoc"
@@ -69,6 +71,7 @@ class OtkDocFragment : Fragment() {
 
         val txtOtkDocType = view.findViewById<TextView>(R.id.txtOtkDocType)
         val txtOtkDocNumDate = view.findViewById<TextView>(R.id.txtOtkDocNumDate)
+        val btnCloseDocMaster = view.findViewById<FloatingActionButton>(R.id.btnCloseDocMaster)
 
         val progressBarOtkDoc = view.findViewById<ProgressBar>(R.id.progressBarOtkDoc)
 
@@ -143,6 +146,33 @@ class OtkDocFragment : Fragment() {
                     activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 }
             }
+        }
+
+
+        //Нажатие кнопки Закрытия отчета мастера
+        btnCloseDocMaster.setOnClickListener {
+
+            val dlgYesNo = AlertDialog.Builder(it.context)
+            dlgYesNo.setTitle("Закрытие отчета мастера смены")
+            dlgYesNo.setMessage("Закрыть отчет мастера смены ?")
+            dlgYesNo.setIcon(R.drawable.ic_commit)
+            dlgYesNo.setPositiveButton("Да") {dialog, id ->
+
+                dialog.cancel()
+                //vmDocMaster.closeDocMaster()
+
+            }
+
+
+            dlgYesNo.setNegativeButton("Нет") {dialog, id ->
+                dialog.cancel()
+            }
+
+            dlgYesNo.create()
+
+            dlgYesNo.show()
+
+
         }
 
     }
