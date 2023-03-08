@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.example.rbmanufacturing.R
+import com.example.rbmanufacturing.network.getURLConnection
 
 private const val ARG_TYPEDOC = "typedoc"
 private const val ARG_UIDDOC = "uid_doc"
@@ -17,7 +19,9 @@ private const val ARG_NAMEITEM= "nameitem"
 private const val ARG_COUNTITEM= "countitem"
 
 class DefectFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
+    private lateinit var vmDefect:  DefectFragmentViewModel
+
     private var typedoc: String? = null
     private var uid_doc: String? = null
     private var docdate: String? = null
@@ -49,6 +53,12 @@ class DefectFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //Инициализируем фабрику модели и передаем параметр
+        val vmDefectViewModelFactory = DefectFragmentViewModelFactory(getURLConnection(view.context))
+        //создаем ViewModel на основании произвольной фабрики
+        vmDefect = ViewModelProvider(this, vmDefectViewModelFactory)[DefectFragmentViewModel::class.java]
+
 
         val txtOtkDocType = view.findViewById<TextView>(R.id.txtOtkDocType)
         val txtOtkDocNumDate = view.findViewById<TextView>(R.id.txtOtkDocNumDate)
