@@ -149,6 +149,17 @@ class OtkDocFragment : Fragment() {
         }
 
 
+        //Слушатель переменной закрытия отчета мастера
+        //после успешного закрытия переходим на фрагмент со списком документов
+        lifecycleScope.launch {
+            vmOtkDoc.isCloseDocMaster.collect {isClose ->
+                if(isClose) {
+                    findNavController().navigate(R.id.action_otkDocFragment_to_otkDocuments)
+                }
+            }
+        }
+
+
         //Нажатие кнопки Закрытия отчета мастера
         btnCloseDocMaster.setOnClickListener {
 
@@ -159,7 +170,7 @@ class OtkDocFragment : Fragment() {
             dlgYesNo.setPositiveButton("Да") {dialog, id ->
 
                 dialog.cancel()
-                //vmDocMaster.closeDocMaster()
+                vmOtkDoc.closeDocMaster()
 
             }
 

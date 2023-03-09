@@ -107,6 +107,10 @@
             app:destination="@id/defectFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_otkDocFragment_to_otkDocuments"
+            app:destination="@id/otkDocuments"
+            app:popUpTo="@id/operationFragment" />
     </fragment>
     <fragment
         android:id="@+id/defectFragment"

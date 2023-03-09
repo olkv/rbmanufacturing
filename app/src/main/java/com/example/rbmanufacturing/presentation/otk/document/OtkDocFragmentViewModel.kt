@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rbmanufacturing.domain.models.CItemWarehouse
 import com.example.rbmanufacturing.domain.models.COtkDocItem
+import com.example.rbmanufacturing.domain.models.CResult
 import com.example.rbmanufacturing.network.Common
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -25,6 +26,11 @@ class OtkDocFragmentViewModel(_typeDoc: String, _uid: String, _urlConnection: St
     //содержание document
     private val docOtkState = MutableStateFlow(mutableListOf<COtkDocItem>())
     var docOtk: MutableStateFlow<MutableList<COtkDocItem>> = docOtkState
+
+    //признак закрытия отчета мастера, при true закрывается фрагмент документа и делается переход
+    //на списаок документов
+    private val isCloseDocMasterState = MutableStateFlow<Boolean>(value = false)
+    var isCloseDocMaster: MutableStateFlow<Boolean> = isCloseDocMasterState
 
     //тип документа
     private var typeDoc: String = ""
@@ -70,12 +76,52 @@ class OtkDocFragmentViewModel(_typeDoc: String, _uid: String, _urlConnection: St
 
     }
 
+    private fun closeDocMasterRepositoryImp() {
+
+        isLoadingState.value = true
+
+        val mService = Common(urlConnection).retrofitService
+        mService.closeDocMaster(uid = uid).enqueue(object : Callback<CResult> {
+
+            override fun onFailure(call: Call<CResult>, t: Throwable) {
+                requestResultState.value = "Ошибка получения ${t.message}"
+                isLoadingState.value = false
+                Log.d("MYLOG", "Ошибка получения ${t.message}")
+            }
+
+            override fun onResponse(call: Call<CResult>, response: Response<CResult>) {
+                val body = response.body() as CResult
+
+                isLoadingState.value = false
+
+                Log.d("MYLOG", "Result : ${body.res}")
+
+                if (body.res == "OK") {
+                    isCloseDocMasterState.value = true
+                } else {
+                    Log.d("MYLOG", body.res)
+                }
+
+            }
+        })
+
+    }
+
 
     fun getDocument() {
 
         viewModelScope.launch {
             isLoadingState.value = false
             getDocOtkRepositoryImp()
+        }
+
+    }
+
+    fun closeDocMaster() {
+
+        viewModelScope.launch {
+            isLoadingState.value = false
+            closeDocMasterRepositoryImp()
         }
 
     }

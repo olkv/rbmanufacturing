@@ -110,7 +110,8 @@ class OperationMaster : Fragment(), RowClickListiner {
         val bundle = bundleOf(
                     "uid" to vmOperationMaster.listItemOperation.value[rowid].uid,
                     "docnumber" to vmOperationMaster.listItemOperation.value[rowid].number,
-                    "docdate" to vmOperationMaster.listItemOperation.value[rowid].date
+                    "docdate" to vmOperationMaster.listItemOperation.value[rowid].date,
+                    "isotkchecked" to vmOperationMaster.listItemOperation.value[rowid].isOTKChecked
                 )
 
         findNavController().navigate(R.id.action_operationMaster_to_docMasterFragment, bundle)

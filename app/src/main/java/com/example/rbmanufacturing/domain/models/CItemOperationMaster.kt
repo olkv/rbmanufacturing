@@ -9,5 +9,6 @@ data class CItemOperationMaster(
     val department: String = "", //подразделение
     val description: String = "", //описание
     var isAddTask: Boolean = false, //Признак доп.задания
-    var isOTKCheck: Boolean = false //Проверено службой ОТК 1*
+    var isOTKCheck: Boolean = false, //Проверено службой ОТК
+    var isOTKChecked: Boolean = false //Требуется проверка службы ОТК
 )
