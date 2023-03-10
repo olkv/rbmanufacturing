@@ -5,4 +5,11 @@
     <string name="seveTo1CERP">Сохранить изменения в 1С:ERP</string>
     <string name="closeDocMaster">Закрыть отчет мастера смены</string>
     <string name="NumAndDateDoc">Номер и дата документа</string>
+
+    <string-array name="vidDefect">
+        <item>Скол детали</item>
+        <item>Не сооответсттвует размерам</item>
+        <item>Плохо окрашена</item>
+    </string-array>
+
 </resources>

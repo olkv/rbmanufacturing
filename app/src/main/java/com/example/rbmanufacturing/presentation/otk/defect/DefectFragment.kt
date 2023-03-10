@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.network.getURLConnection
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 private const val ARG_TYPEDOC = "typedoc"
 private const val ARG_UIDDOC = "uid_doc"
@@ -64,6 +65,12 @@ class DefectFragment : Fragment() {
         val txtOtkDocNumDate = view.findViewById<TextView>(R.id.txtOtkDocNumDate)
         val txtNameItem = view.findViewById<TextView>(R.id.txtNameItem)
         val txtItemCount = view.findViewById<TextView>(R.id.txtItemCount)
+        val btnAdd = view.findViewById<FloatingActionButton>(R.id.btnAddDefect)
+
+        btnAdd.setOnClickListener {
+            val dlgEditDefect = EditDefectFragment()
+            dlgEditDefect.show(childFragmentManager, "Дефект")
+        }
 
         txtOtkDocType.text = typedoc
         txtOtkDocNumDate.text = "${docnumber?.toInt().toString()} от $docdate"
