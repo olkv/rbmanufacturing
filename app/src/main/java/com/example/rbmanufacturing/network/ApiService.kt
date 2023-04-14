@@ -51,5 +51,9 @@ interface RetrofitServices {
     @GET("getitemdocotk/{typedoc}/{uid}")
     fun getItemDocOtk(@Path("typedoc") typedoc: String, @Path("uid") uid: String ): Call<MutableList<COtkDocItem>>
 
+    //Получить список дефектов
+    @GET("getlistdefectotk/{uid}/{codeitem}")
+    fun getListDefectOtk(@Path("uid") uid: String, @Path("codeitem") codeitem: Int ): Call<MutableList<COtkItems>>
+
 }
 

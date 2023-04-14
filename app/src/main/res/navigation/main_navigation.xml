@@ -124,7 +124,7 @@
             android:name="typedoc"
             app:argType="string" />
         <argument
-            android:name="uid"
+            android:name="uid_doc"
             app:argType="string" />
         <argument
             android:name="docnumber"

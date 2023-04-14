@@ -1,6 +1,7 @@
 package com.example.rbmanufacturing.presentation.otk.defect
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +16,26 @@ class DefectFragmentAdapter(context: Context, val callback: (rowid: Int?)-> Unit
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
-        //val txtNameNom = view.findViewById<TextView>(R.id.txtNameNom)
+        val txtVidDefect = view.findViewById<TextView>(R.id.txtVidDefect)
+        val txtTypeDefect = view.findViewById<TextView>(R.id.txtTypeDefect)
+        val txtDescriptionDefect = view.findViewById<TextView>(R.id.txtDescriptionDefect)
+        val txtCountDefect = view.findViewById<TextView>(R.id.txtCountDefect)
 
         fun bind(item: COtkItems) {
 
-            //txtNameNom.text = item.name +" "+item.parameter
+            txtVidDefect.text = item.vid_defect
+            txtTypeDefect.text = item.type_defect
+            txtDescriptionDefect.text = item.description
+
+            if(item.type_defect=="Устранимый") {
+                txtTypeDefect.setTextColor(Color.rgb(0x1a,0x97,0xf6))
+            } else {
+                txtTypeDefect.setTextColor(Color.rgb(0xfa,0x4d,0x64))
+            }
+
+            val count = item.count
+
+            txtCountDefect.text = "Количество выявленных дефектов : $count шт."
 
             itemView.setOnClickListener {
                 callback(adapterPosition)

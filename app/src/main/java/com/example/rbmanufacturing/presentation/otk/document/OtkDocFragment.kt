@@ -94,7 +94,7 @@ class OtkDocFragment : Fragment() {
             //Вызываем фрагмент редактирования дефектов
             val bundle = bundleOf(
                 "typedoc" to typedoc,
-                "uid" to uid,
+                "uid_doc" to uid,
                 "docnumber" to docnumber,
                 "docdate" to docdate,
                 "codeitem" to codeitem,

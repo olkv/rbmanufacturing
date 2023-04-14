@@ -4,7 +4,7 @@ package com.example.rbmanufacturing.domain.models
 data class COtkItems(
     val uid_defect: String,
     val uid_doc: String,
-    val code_item: Int,
+    val codeitem: Int,
     val vid_defect: String,
     val type_defect: String,
     val count: Int = 0,

@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
@@ -24,9 +26,9 @@ private const val ARG_TYPEDOC = "typedoc"
 private const val ARG_UIDDOC = "uid_doc"
 private const val ARG_DOCDATE = "docdate"
 private const val ARG_DOCNUMBER = "docnumber"
-private const val ARG_CODEITEM= "codeitem"
-private const val ARG_NAMEITEM= "nameitem"
-private const val ARG_COUNTITEM= "countitem"
+private const val ARG_CODEITEM = "codeitem"
+private const val ARG_NAMEITEM = "nameitem"
+private const val ARG_COUNTITEM = "countitem"
 
 class DefectFragment : Fragment() {
 
@@ -66,10 +68,14 @@ class DefectFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d("MyLOG","uid_doc = $uid_doc")
+        Log.d("MyLOG","codeitem = $codeitem")
+
         viewModelEditDefect.clearResult()
 
         //Инициализируем фабрику модели и передаем параметр
-        val vmDefectViewModelFactory = DefectFragmentViewModelFactory(getURLConnection(view.context))
+        val vmDefectViewModelFactory = DefectFragmentViewModelFactory(getURLConnection(view.context), uid_doc!!, codeitem!!)
+
         //создаем ViewModel на основании произвольной фабрики
         vmDefect = ViewModelProvider(this, vmDefectViewModelFactory)[DefectFragmentViewModel::class.java]
 
@@ -79,6 +85,7 @@ class DefectFragment : Fragment() {
         val txtNameItem = view.findViewById<TextView>(R.id.txtNameItem)
         val txtItemCount = view.findViewById<TextView>(R.id.txtItemCount)
         val btnAdd = view.findViewById<FloatingActionButton>(R.id.btnAddDefect)
+        val progressBarDefect = view.findViewById<ProgressBar>(R.id.progressBarDefect)
 
         val rcvDefect = view.findViewById<RecyclerView>(R.id.rcvDefect)
         rcvDefect?.hasFixedSize()
@@ -88,14 +95,14 @@ class DefectFragment : Fragment() {
 
         }
 
-        /*
+
         //SWIPE (удаление) строки
         //НАЧАЛО БЛОКА
         val mCallBack = object: ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
-                viewHolder: ViewHolder,
-                target: ViewHolder
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
             ): Boolean {
                 return false
             }
@@ -111,7 +118,9 @@ class DefectFragment : Fragment() {
         val itemTouchHelper = ItemTouchHelper(mCallBack)
         itemTouchHelper.attachToRecyclerView(rcvDefect)
 
-        */
+
+
+        rcvDefect?.adapter = adapter
 
 
         btnAdd.setOnClickListener {
@@ -138,6 +147,35 @@ class DefectFragment : Fragment() {
         lifecycleScope.launch {
             viewModelEditDefect.requestResult.collect { resDlg->
                 Log.d("MYLOG", "Result whith DefectFragment - $resDlg")
+            }
+        }
+
+        //Слушатель для изменения содержания документа
+        //при изменении передает данные в адаптер
+        lifecycleScope.launch {
+            vmDefect.itemsOtk.collect {list ->
+                //Log.d("MYLOG", "Количество записей: ${list.size.toString()}")
+                adapter.setDocOtk(list)
+            }
+        }
+
+        //Слушатель переменной выполнения запросов к HTTP сервису
+        //при ожидании вызвается ProgreeBar, после завершения ProgressBar скрываем
+        lifecycleScope.launch {
+            vmDefect.isLoading.collect {isLoading ->
+                if(isLoading) {
+                    progressBarDefect.visibility = View.VISIBLE
+                    progressBarDefect.animate().start()
+
+                    //Отключаем сенсор для блокировки управления
+                    activity?.window?.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                } else {
+                    progressBarDefect.animate().cancel()
+                    progressBarDefect.visibility = View.GONE
+
+                    //Включаем сенсор
+                    activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                }
             }
         }
 
