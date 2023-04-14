@@ -104,9 +104,12 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
 
                             //Проверяем если установлено макисмально допустимое количество и редактируемое количество > максимального
                             //тогда редактируемое количество приравниваем к максимальному
+                            /*
                             if( t_items[adapterPosition].maxcount>0 && t_items[adapterPosition].editcount>t_items[adapterPosition].maxcount) {
                                 t_items[adapterPosition].editcount=t_items[adapterPosition].maxcount
                             }
+
+                             */
 
 
                             if( t_items[adapterPosition].editcount>0) {
@@ -123,7 +126,18 @@ class DocMasterAdapter (context: Context, val rowClickListiner: RowClickListiner
                 }
 
                 override fun afterTextChanged(p0: Editable?) {
+                    if(p0!!.isNotEmpty()) {
+                        if (p0.isDigitsOnly()) {
 
+                            //Проверяем если установлено макисмально допустимое количество и редактируемое количество > максимального
+                            //тогда редактируемое количество приравниваем к максимальному
+                            if(t_items[adapterPosition].maxcount>0 && t_items[adapterPosition].editcount>t_items[adapterPosition].maxcount) {
+                                p0.clear()
+                                p0.append(t_items[adapterPosition].maxcount.toString())
+                            }
+
+                        }
+                    }
                 }
 
             })

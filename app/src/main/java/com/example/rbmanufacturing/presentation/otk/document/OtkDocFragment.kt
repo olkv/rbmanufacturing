@@ -86,7 +86,7 @@ class OtkDocFragment : Fragment() {
         val adapter = OtkDocAdapter(view.context) { rowid ->
 
             val codeitem = vmOtkDoc.docOtk.value[rowid!!].codestr
-            val nameitem = vmOtkDoc.docOtk.value[rowid!!].name
+            val nameitem = vmOtkDoc.docOtk.value[rowid!!].name+" "+vmOtkDoc.docOtk.value[rowid!!].parameter
             val countitem = vmOtkDoc.docOtk.value[rowid!!].count.toFloat()
 
             Log.d("MYLOG", "Click ROWID=$rowid  TypeDoc=$typedoc  NameItem=$nameitem")

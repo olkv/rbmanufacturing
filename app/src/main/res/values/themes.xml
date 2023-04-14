@@ -18,4 +18,20 @@
         <item name="colorAccent">@android:color/white</item>
     </style>
 
+    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:background">@drawable/baseline_arrow_drop_down_24</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="SpinnrtStyle">
+        <item name="android:clickable">true</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:popupBackground">#DFFFFFFF</item>
+    </style>
+
 </resources>

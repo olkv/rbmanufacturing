@@ -51,8 +51,14 @@ class OtkDocumentsViewModel(_userName: String, _urlConnnection: String): ViewMod
             }
 
             override fun onResponse(call: Call<MutableList<COtkDocument>>, response: Response<MutableList<COtkDocument>>) {
-                val body = response.body() as MutableList<COtkDocument>
-                listOtkDocuments.value = body
+                try {
+                    val body = response.body() as MutableList<COtkDocument>
+                    listOtkDocuments.value = body
+
+                } catch(e: Exception) {
+                    Log.e("MYLOG", e.message.toString())
+                }
+
                 isLoadingState.value = false
             }
         })
