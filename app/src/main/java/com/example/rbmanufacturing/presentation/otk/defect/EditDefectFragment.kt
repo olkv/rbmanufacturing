@@ -78,7 +78,7 @@ class EditDefectFragment : BottomSheetDialogFragment() {
         val btnSave = view.findViewById<Button>(R.id.btnSave)
         btnSave.setOnClickListener {
 
-            //Результат щаносим в Bundle и передаем его в вышестоящее активити (фрагмент)
+            //Результат заносим в Bundle и передаем его в вышестоящее активити (фрагмент)
             //метод устаревший рекомендуьт использовать LiveData и ViewModel
             //я думаю можно использовать StateFloat
 
