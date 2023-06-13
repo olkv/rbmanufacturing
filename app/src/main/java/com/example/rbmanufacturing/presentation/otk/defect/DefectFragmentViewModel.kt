@@ -70,6 +70,9 @@ class DefectFragmentViewModel(_urlConnection: String, _uid: String, _codeitem: I
 
     }
 
+    fun getImages(position:Int) : MutableList<String> {
+        return  itemsOtkState.value[position].strImage
+    }
 
     fun getListDefectOTK() {
 

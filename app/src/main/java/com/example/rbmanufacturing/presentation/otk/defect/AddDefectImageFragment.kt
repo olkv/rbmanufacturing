@@ -3,18 +3,27 @@ package com.example.rbmanufacturing.presentation.otk.defect
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.findFragment
 import com.example.rbmanufacturing.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 private const val ARG_UID_DEFECT = "uid_defect"
 
@@ -55,7 +64,7 @@ class AddDefectImageFragment : BottomSheetDialogFragment() {
 
         if(allPermissionGranded()) {
             //Toast.makeText(this, "Camera Granted", Toast.LENGTH_SHORT).show()
-            //startCamera()
+            startCamera()
         } else {
             ActivityCompat.requestPermissions(
                 requireActivity(),
@@ -64,6 +73,64 @@ class AddDefectImageFragment : BottomSheetDialogFragment() {
             )
         }
 
+
+        val btnCancel = view.findViewById<Button>(R.id.btnCancelCaptireImage)
+        btnCancel.setOnClickListener {
+            dismiss()
+        }
+
+
+        val btnCaptureImage = view.findViewById<FloatingActionButton>(R.id.btnCaptureImage)
+        btnCaptureImage.setOnClickListener {
+            takePhoto()
+        }
+
+    }
+
+    private fun takePhoto()  {
+        val imageCapture = imageCapture?: return
+
+
+    }
+
+
+    private fun startCamera() {
+        val cameraProvideFuture = ProcessCameraProvider.getInstance(requireContext())
+
+        val camera_view = view?.findViewById<PreviewView>(R.id.camera_view)
+
+        cameraProvideFuture.addListener({
+
+            val cameraProvider : ProcessCameraProvider =  cameraProvideFuture.get()
+
+            val preview = Preview.Builder()
+                .build()
+                .also { mPreview ->
+                    mPreview.setSurfaceProvider(
+                        camera_view?.surfaceProvider
+                    )
+                }
+
+            imageCapture = ImageCapture.Builder()
+                .build()
+
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+            try {
+
+                cameraProvider.unbindAll()
+
+                cameraProvider.bindToLifecycle(
+                    this, cameraSelector,
+                    preview,
+                    imageCapture
+                )
+
+            } catch (e:Exception) {
+                Log.d("MYLOG", "starting Camera fail ${e.message}")
+            }
+
+        }, ContextCompat.getMainExecutor(requireContext()))
     }
 
 
@@ -76,7 +143,7 @@ class AddDefectImageFragment : BottomSheetDialogFragment() {
 
         if (requestCode==REQUEST_CODE_PERMISSIONS) {
             if (allPermissionGranded()) {
-                //startCamera()
+                startCamera()
             } else {
                 dismiss()
             }

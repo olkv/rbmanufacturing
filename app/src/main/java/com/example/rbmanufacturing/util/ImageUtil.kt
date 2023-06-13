@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory
 import android.util.Base64
 import java.io.ByteArrayOutputStream
 
-class ImageUtil {
+object ImageUtil {
 
     fun convert(base64str: String): Bitmap {
         val decodeBytes = Base64.decode(base64str.substring(base64str.indexOf(","+1)),Base64.DEFAULT)

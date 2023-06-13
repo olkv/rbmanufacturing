@@ -1,6 +1,7 @@
 package com.example.rbmanufacturing.presentation.otk.defect
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.HorizontalScrollView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -17,8 +19,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
+import androidx.recyclerview.widget.RecyclerView.Orientation
 import com.example.rbmanufacturing.R
 import com.example.rbmanufacturing.network.getURLConnection
+import com.example.rbmanufacturing.util.ImageUtil
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -85,13 +90,31 @@ class DefectFragment : Fragment() {
         val txtNameItem = view.findViewById<TextView>(R.id.txtNameItem)
         val txtItemCount = view.findViewById<TextView>(R.id.txtItemCount)
         val btnAdd = view.findViewById<FloatingActionButton>(R.id.btnAddDefect)
+        val btnGetPhoto = view.findViewById<FloatingActionButton>(R.id.btnGetPhoto)
         val progressBarDefect = view.findViewById<ProgressBar>(R.id.progressBarDefect)
 
         val rcvDefect = view.findViewById<RecyclerView>(R.id.rcvDefect)
         rcvDefect?.hasFixedSize()
         rcvDefect?.layoutManager = LinearLayoutManager(view.context)
 
+
+        val rcvFotoDefect = view.findViewById<RecyclerView>(R.id.rcvFotoDefect)
+        rcvFotoDefect?.hasFixedSize()
+        rcvFotoDefect.layoutManager = LinearLayoutManager(view.context, HORIZONTAL,false)
+
+        val adapterFoto = DefectImageFragmentAdapter(view.context) {itemPosition ->
+            Log.d("MYLOG", "Selected $itemPosition image photo")
+
+
+        }
+
+
         val adapter = DefectFragmentAdapter(view.context) {itemPosition ->
+            Log.d("MYLOG","Defect position $itemPosition is selected. UID Defect is ${vmDefect.itemsOtk.value[itemPosition!!].uid_defect}")
+
+            val strImages = vmDefect.getImages(itemPosition)
+
+            adapterFoto.setItems(strImages)
 
         }
 
@@ -121,6 +144,14 @@ class DefectFragment : Fragment() {
 
 
         rcvDefect?.adapter = adapter
+
+        rcvFotoDefect?.adapter = adapterFoto
+
+
+        btnGetPhoto.setOnClickListener {
+            val dlgAddImege = AddDefectImageFragment()
+            dlgAddImege.show(parentFragmentManager, "Фотография")
+        }
 
 
         btnAdd.setOnClickListener {
