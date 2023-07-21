@@ -64,7 +64,8 @@
             android:focusable="auto"
             android:contentDescription="@string/closeDocMaster"
             android:src="@android:drawable/ic_lock_idle_lock"
-            app:backgroundTint="@color/red_002"
+            app:tint="@color/white"
+            android:backgroundTint="@color/red_001"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

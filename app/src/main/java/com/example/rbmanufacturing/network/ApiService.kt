@@ -55,5 +55,10 @@ interface RetrofitServices {
     @GET("getlistdefectotk/{uid}/{codeitem}")
     fun getListDefectOtk(@Path("uid") uid: String, @Path("codeitem") codeitem: Int ): Call<MutableList<COtkItems>>
 
+    //Добавить дефект
+    @FormUrlEncoded
+    @POST("adddefect")
+    fun AddDefect(@Field("strJson") strJson:String): Call<CResult>
+
 }
 

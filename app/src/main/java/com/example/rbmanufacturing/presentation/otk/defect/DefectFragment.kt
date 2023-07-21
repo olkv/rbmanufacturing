@@ -105,12 +105,21 @@ class DefectFragment : Fragment() {
         val adapterFoto = DefectImageFragmentAdapter(view.context) {itemPosition ->
             Log.d("MYLOG", "Selected $itemPosition image photo")
 
+            val bndPar = bundleOf(
+                "imageStr" to vmDefect.getImages(vmDefect.selectedItemIndex)[itemPosition!!]
+            )
+
+            val dlgPreviewImageDefectFragment = PreviewImageDefectFragment()
+            dlgPreviewImageDefectFragment.arguments = bndPar
+            dlgPreviewImageDefectFragment.show(parentFragmentManager, "Просмотр")
 
         }
 
 
         val adapter = DefectFragmentAdapter(view.context) {itemPosition ->
             Log.d("MYLOG","Defect position $itemPosition is selected. UID Defect is ${vmDefect.itemsOtk.value[itemPosition!!].uid_defect}")
+
+            vmDefect.selectedItemIndex = itemPosition
 
             val strImages = vmDefect.getImages(itemPosition)
 
@@ -159,7 +168,10 @@ class DefectFragment : Fragment() {
             viewModelEditDefect.clearResult()
 
             val bndPar = bundleOf(
-                "count" to countitem?.toInt()
+                "uid_doc" to uid_doc.toString(),
+                "codeitem" to codeitem?.toInt(),
+                "count" to countitem?.toInt(),
+                "urlconnection" to getURLConnection(view.context)
             )
 
             val dlgEditDefect = EditDefectFragment()
@@ -178,6 +190,7 @@ class DefectFragment : Fragment() {
         lifecycleScope.launch {
             viewModelEditDefect.requestResult.collect { resDlg->
                 Log.d("MYLOG", "Result whith DefectFragment - $resDlg")
+                vmDefect.getListDefectOTK()
             }
         }
 
@@ -186,7 +199,18 @@ class DefectFragment : Fragment() {
         lifecycleScope.launch {
             vmDefect.itemsOtk.collect {list ->
                 //Log.d("MYLOG", "Количество записей: ${list.size.toString()}")
-                adapter.setDocOtk(list)
+
+                if (list.size>0 && vmDefect.selectedItemIndex==-1) {
+                    vmDefect.selectedItemIndex = 0
+                }
+
+                adapter.setDocOtk(list,vmDefect.selectedItemIndex)
+
+                if (list.size>0) {
+                    val strImages = vmDefect.getImages(vmDefect.selectedItemIndex)
+                    adapterFoto.setItems(strImages)
+                }
+
             }
         }
 

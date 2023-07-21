@@ -8,7 +8,8 @@ import java.io.ByteArrayOutputStream
 object ImageUtil {
 
     fun convert(base64str: String): Bitmap {
-        val decodeBytes = Base64.decode(base64str.substring(base64str.indexOf(","+1)),Base64.DEFAULT)
+        //val decodeBytes = Base64.decode(base64str.substring(base64str.indexOf(","+1)),Base64.DEFAULT)
+        val decodeBytes = Base64.decode(base64str, Base64.DEFAULT)
         return BitmapFactory.decodeByteArray(decodeBytes,0,decodeBytes.size)
     }
 

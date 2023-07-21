@@ -14,14 +14,23 @@ class DefectFragmentAdapter(context: Context, val callback: (rowid: Int?)-> Unit
     val inflater: LayoutInflater = LayoutInflater.from(context)
     var t_items = mutableListOf<COtkItems>()
 
+    private var selectedItems:Int = -1
+
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
         val txtVidDefect = view.findViewById<TextView>(R.id.txtVidDefect)
         val txtTypeDefect = view.findViewById<TextView>(R.id.txtTypeDefect)
         val txtDescriptionDefect = view.findViewById<TextView>(R.id.txtDescriptionDefect)
         val txtCountDefect = view.findViewById<TextView>(R.id.txtCountDefect)
+        val viewSelected = view.findViewById<View>(R.id.dividerSelected)
 
         fun bind(item: COtkItems) {
+
+            viewSelected.visibility = View.GONE
+
+            if (adapterPosition==selectedItems) {
+                viewSelected.visibility = View.VISIBLE
+            }
 
             txtVidDefect.text = item.vid_defect
             txtTypeDefect.text = item.type_defect
@@ -39,14 +48,18 @@ class DefectFragmentAdapter(context: Context, val callback: (rowid: Int?)-> Unit
 
             itemView.setOnClickListener {
                 callback(adapterPosition)
+                selectedItems = adapterPosition
+                notifyDataSetChanged()
             }
 
         }
 
     }
 
-    internal fun setDocOtk(items: MutableList<COtkItems>) {
+    internal fun setDocOtk(items: MutableList<COtkItems>, selectedItems:Int=-1) {
         this.t_items = items
+        this.selectedItems = selectedItems
+
         this.notifyDataSetChanged()
     }
 

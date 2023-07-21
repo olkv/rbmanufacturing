@@ -4,16 +4,23 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCapture.*
+import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
@@ -21,9 +28,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.findFragment
+import com.example.rbmanufacturing.BuildConfig
 import com.example.rbmanufacturing.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.io.File
+import java.nio.file.Paths
+import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import kotlin.io.path.Path
 
 private const val ARG_UID_DEFECT = "uid_defect"
 
@@ -44,11 +58,13 @@ class AddDefectImageFragment : BottomSheetDialogFragment() {
 
     private var imageCapture: ImageCapture?= null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             uid_defect = it.getString(ARG_UID_DEFECT)
         }
+
     }
 
     override fun onCreateView(
@@ -90,8 +106,45 @@ class AddDefectImageFragment : BottomSheetDialogFragment() {
     private fun takePhoto()  {
         val imageCapture = imageCapture?: return
 
+        val root = File(Environment.getExternalStorageDirectory(), BuildConfig.APPLICATION_ID + File.separator)
+        root.mkdirs()
+
+        val fname = "img_defect.jpg"
+
+        val photoFile = File(root, fname)
+
+        Log.d("MYLOG", photoFile.absolutePath)
+
+        val outputOptions = OutputFileOptions.
+                                Builder(photoFile).
+                                build()
+
+        //В эмуляторе процедура не работает
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(requireActivity()),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+
+                    val savedUri = Uri.fromFile(photoFile)
+                    val msg = "Photo Saved"
+
+                    Log.d("MYLOG","$msg $savedUri")
+                    //Toast.makeText(requireActivity(), "$msg $savedUri", Toast.LENGTH_LONG).show()
+
+                }
+
+                override fun onError(exception: ImageCaptureException) {
+                    Log.d("MYLOG", "Error ${exception.message}", exception)
+
+                }
+
+            }
+        )
+
 
     }
+
 
 
     private fun startCamera() {
@@ -111,7 +164,7 @@ class AddDefectImageFragment : BottomSheetDialogFragment() {
                     )
                 }
 
-            imageCapture = ImageCapture.Builder()
+            imageCapture = Builder()
                 .build()
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA

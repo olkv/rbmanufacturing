@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Spinner
 import androidx.core.os.bundleOf
@@ -24,23 +25,29 @@ private const val ARG_TYPEDEFECT = "typedefect"
 private const val ARG_VIDDEFECT = "viddefect"
 private const val ARG_DESCRIPTION = "description"
 private const val ARG_COUNT = "count"
+private const val ARG_UID_DOC = "uid_doc"
+private const val ARG_CODEITEM = "codeitem"
 
 class EditDefectFragment : BottomSheetDialogFragment() {
 
     private val viewModelEditDefect: EditDefectViewModel by activityViewModels()
 
     private var typedefect: String? = null
+    private var uid_doc: String? = null
     private var viddefect: String? = null
     private var description: String? = null
     private var count: Int? = 0
+    private var codeitem: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             typedefect = it.getString(ARG_TYPEDEFECT)
+            uid_doc = it.getString(ARG_UID_DOC)
             viddefect = it.getString(ARG_VIDDEFECT)
             description = it.getString(ARG_DESCRIPTION)
             count = it.getInt(ARG_COUNT)
+            codeitem = it.getInt(ARG_CODEITEM)
         }
     }
 
@@ -57,6 +64,8 @@ class EditDefectFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d("MYLOG", "Count = $count")
+        Log.d("MYLOG", "uid_doc = $uid_doc")
+        Log.d("MYLOG", "codeitem = ${codeitem.toString()}")
 
         val spnVidDefect = view.findViewById<Spinner>(R.id.spnVidDefect)
         spnVidDefect.prompt = "Вид дефекта"
@@ -82,8 +91,13 @@ class EditDefectFragment : BottomSheetDialogFragment() {
             //метод устаревший рекомендуьт использовать LiveData и ViewModel
             //я думаю можно использовать StateFloat
 
-            typedefect = "Устранимый"
+            val selectGroupItem = rgpTypeDefect.checkedRadioButtonId
+            val radioButton = view.findViewById<RadioButton>(selectGroupItem)
+
+            typedefect = radioButton.text.toString()
+
             description = txtEditDescription.text.toString()
+            viddefect = spnVidDefect.selectedItem.toString()
 
             count = 0
             if(txtEditCount.text.toString().isNotEmpty() && txtEditCount.text.toString().isDigitsOnly()) {
@@ -91,9 +105,12 @@ class EditDefectFragment : BottomSheetDialogFragment() {
             }
 
             val resDlg = bundleOf(
+                "uid_doc" to uid_doc,
                 "typedefect" to typedefect,
                 "description" to description,
-                "count" to count
+                "viddefect" to viddefect,
+                "count" to count,
+                "codeitem" to codeitem
             )
 
             //activity?.intent?.putExtras(resDlg)
@@ -120,13 +137,15 @@ class EditDefectFragment : BottomSheetDialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(typedefect: String, viddefect: String, description: String, count: Int) =
+        fun newInstance(uid_doc: String, codeitem: Int, typedefect: String, viddefect: String, description: String, count: Int) =
             EditDefectFragment().apply {
                 arguments = Bundle().apply {
+                    putString(ARG_UID_DOC, uid_doc)
                     putString(ARG_TYPEDEFECT, typedefect)
                     putString(ARG_VIDDEFECT, viddefect)
                     putString(ARG_DESCRIPTION, description)
                     putInt(ARG_COUNT, count)
+                    putInt(ARG_CODEITEM, codeitem)
                 }
             }
     }

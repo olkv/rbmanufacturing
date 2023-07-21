@@ -31,6 +31,8 @@ class DefectFragmentViewModel(_urlConnection: String, _uid: String, _codeitem: I
     private val itemsOtkState = MutableStateFlow(mutableListOf<COtkItems>())
     var itemsOtk: MutableStateFlow<MutableList<COtkItems>> = itemsOtkState
 
+    var selectedItemIndex:Int = -1
+
     init {
 
         this.urlConnection = _urlConnection
